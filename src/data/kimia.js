@@ -1,0 +1,32 @@
+'use strict';
+
+module.exports = {
+  subject: 'Kimia',
+  items: [
+    { q: 'Teori atom Dalton menyatakan bahwa atom adalah bagian terkecil materi yang...', o: ['dapat dibagi menjadi elektron, proton, dan neutron', 'berbentuk awan probabilitas tanpa lintasan pasti', 'memiliki inti yang bermuatan positif dikelilingi elektron', 'tidak dapat dibagi lagi dan setiap unsur memiliki atom yang identik'], a: 3, d: 'LOTS' },
+    { q: 'Hasil percobaan tekanan partikel alfa menunjukkan sebagian partikel daflek. Kesimpulan model atom Rutherford adalah...', o: ['atom memiliki inti yang bermuatan positif dengan elektron mengelilinginya', 'elektron berada pada lintasan dengan tingkat energi tertentu', 'atom merupakan bola bermuatan negatif dengan elektron menyebar', 'atom bermuatan listrik netral karena tidak mengandung partikel bermuatan'], a: 0, d: 'LOTS' },
+    { q: 'Atom sodium (Na) memiliki nomor atom 11 dan nomor massa 23. Jumlah proton, neutron, dan elektron dalam atom netral Na berturut-turut adalah...', o: ['11, 11, dan 23', '23, 11, dan 11', '11, 12, dan 11', '12, 11, dan 11'], a: 2, d: 'LOTS' },
+    { q: 'Partikel subatom yang bermuatan positif (+1) dan terdapat di dalam inti atom adalah...', o: ['proton', 'neutron', 'elektron', 'foton'], a: 0, d: 'LOTS' },
+    { q: 'Konfigurasi elektron atom kalsium (Ca, Z = 20) yang benar adalah...', o: ['1s\u00B2 2s\u00B2 2p\u2076 3s\u00B2 3p\u2076 3d\u00B2', '1s\u00B2 2s\u00B2 2p\u2076 3s\u00B2 3p\u2076 4s\u00B2', '1s\u00B2 2s\u00B2 2p\u2076 3s\u00B2 3p\u2078', '1s\u00B2 2s\u00B2 2p\u2078 3s\u00B2 3p\u2076'], a: 1, d: 'LOTS' },
+    { q: 'Atom klorin (Cl, Z = 17) memiliki konfigurasi 1s\u00B2 2s\u00B2 2p\u2076 3s\u00B2 3p\u2075. Elektron valensi atom Cl berjumlah...', o: ['5', '10', '7', '17'], a: 2, d: 'LOTS' },
+    { q: 'Atom kalsium (Ca, Z = 20) menurut sistem periodik terletak pada...', o: ['golongan IA periode 3', 'golongan IIA periode 4', 'golongan IIA periode 3', 'golongan IIB periode 4'], a: 1, d: 'LOTS' },
+    { q: 'Di antara pasangan unsur seperiode berikut, atom yang memiliki jari-jari paling besar adalah...', o: ['Mg (Z = 12)', 'Al (Z = 13)', 'Cl (Z = 17)', 'Na (Z = 11)'], a: 3, d: 'LOTS' },
+    { q: 'Dari kiri ke kanan dalam satu periode, kecenderungan energi ionisasi suatu unsur adalah...', o: ['menurun karena jari-jari atom makin besar', 'tetap karena muatan inti tidak berubah', 'naik karena muatan inti bertambah dan jari-jari atom mengecil', 'naik lalu turun karena sifat logam berubah'], a: 2, d: 'LOTS' },
+    { q: 'Ikatan kimia yang terbentuk karena perpindahan elektron dari atom logam ke atom nonlogam disebut ikatan...', o: ['ion', 'kovalen', 'logam', 'hidrogen'], a: 0, d: 'LOTS' },
+    { q: 'Dalam molekul H\u2082O, satu atom O berikatan dengan dua atom H dengan cara...', o: ['menyerahkan dua elektron valensinya kepada atom H', 'menggunakan dua pasang elektron ikatan bersama secara bersama-sama', 'menarik elektron atom H sehingga O berubah menjadi ion', 'berbagi semua elektron valensinya sebanyak enam buah'], a: 1, d: 'LOTS' },
+    { q: 'Ion NH\u2084\u207A mengandung ikatan kovalen koordinasi yang terbentuk karena...', o: ['atom H menyerahkan elektronnya kepada atom N', 'atom N menyumbang sepasang elektron valensinya untuk dipecah bersama atom H\u207A', 'keempat atom H saling berikatan satu sama lain', 'ion H\u207A menyumbangkan protonnya kepada atom N'], a: 1, d: 'HOTS' },
+    { q: 'Ikatan logam memungkinkan logam dapat menghantarkan listrik dan tahan ditempa. Sifat tersebut disebabkan oleh...', o: ['adanya ion-ion negatif yang tersusun rapat', 'adanya elektron valensi yang bebas bergerak (lautan elektron)', 'adanya ikatan kovalen yang kuat antaratom logam', 'adanya pasangan elektron ikatan yang stabil'], a: 1, d: 'LOTS' },
+    { q: 'Bentuk molekul CH\u2084 dengan empat pasang elektron ikatan yang berjauhan pada atom C adalah...', o: ['tetrahedral', 'piramida trigonal', 'datar segitiga', 'linier'], a: 0, d: 'LOTS' },
+    { q: 'Molekul CO\u2082 memiliki dua ikatan C=O yang bersifat polar, tetapi molekul keseluruhannya bersifat nonpolar karena...', o: ['beda keelektronegatifan C dan O sangat kecil', 'bentuk molekulnya linier simetris sehingga momen dipol saling meniadakan', 'atom C tidak menarik elektron sama sekali', 'seluruh ikatannya merupakan ikatan ion yang lemah'], a: 1, d: 'HOTS' },
+    { q: 'Hukum kekekalan massa Lavoisier menyatakan bahwa dalam reaksi kimia...', o: ['massa zat sebelum dan sesudah reaksi selalu tetap', 'perbandingan massa unsur dalam senyawa selalu tetap', 'volume gas sebelum dan sesudah reaksi selalu sama', 'energi total reaksi selalu bertambah'], a: 0, d: 'LOTS' },
+    { q: 'Senyawa yang termasuk hidrokarbon jenuh (alkana) adalah...', o: ['C\u2082H\u2084', 'C\u2082H\u2082', 'C\u2083H\u2088', 'C\u2086H\u2086'], a: 2, d: 'LOTS' },
+    { q: 'Massa atom relatif (Ar): C = 12 dan O = 16. Massa molekul relatif (Mr) CO\u2082 adalah...', o: ['28', '32', '40', '44'], a: 3, d: 'LOTS' },
+    { q: 'Massa molar MgCl\u2082 jika Ar Mg = 24 dan Cl = 35,5 adalah... g/mol.', o: ['59,5', '71', '83,5', '95'], a: 3, d: 'HOTS' },
+    { q: 'Jumlah mol dalam 4 gram gas metana (CH\u2084, Mr = 16) adalah...', o: ['0,1 mol', '0,2 mol', '0,25 mol', '0,4 mol'], a: 2, d: 'HOTS' },
+    { q: 'Pada keadaan STP (22,4 L/mol), volume 0,25 mol gas nitrogen (N\u2082) adalah...', o: ['2,24 L', '5,6 L', '11,2 L', '22,4 L'], a: 1, d: 'HOTS' },
+    { q: 'Reaksi pembentukan MgO: 2Mg + O\u2082 \u2192 2MgO (Ar Mg = 24, O = 16). Massa MgO yang terbentuk dari 4,8 gram Mg yang bereaksi sempurna dengan oksigen adalah...', o: ['4 gram', '6 gram', '8 gram', '10 gram'], a: 3, d: 'HOTS' },
+    { q: 'Bilangan oksidasi (biloks) atom Mn dalam senyawa KMnO\u2084 (K = +1, O = \u22122) adalah...', o: ['+2', '+4', '+5', '+7'], a: 3, d: 'HOTS' },
+    { q: 'Larutan HCl 0,01 M memiliki pH sebesar...', o: ['1', '2', '3', '12'], a: 1, d: 'HOTS' },
+    { q: 'Pembakaran sempurna propana: C\u2083H\u2088 + 5O\u2082 \u2192 3CO\u2082 + 4H\u2082O. Jumlah mol CO\u2082 yang dihasilkan dari pembakaran sempurna 1 mol propana adalah...', o: ['1 mol', '2 mol', '3 mol', '4 mol'], a: 2, d: 'LOTS' },
+  ],
+};

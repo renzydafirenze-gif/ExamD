@@ -1,0 +1,32 @@
+'use strict';
+
+module.exports = {
+  subject: 'Fisika',
+  items: [
+    { q: 'Panjang sebuah meja diukur dengan mistar dan hasilnya 1,52 m. Berdasarkan aturan angka penting, hasil pengukuran tersebut memiliki jumlah angka penting sebanyak...', o: ['2 angka penting', '4 angka penting', '5 angka penting', '3 angka penting'], a: 3, d: 'LOTS' },
+    { q: 'Besaran turunan yang satuannya dalam SI adalah m/s\u00B2 adalah...', o: ['kecepatan', 'gaya', 'tekanan', 'percepatan'], a: 3, d: 'LOTS' },
+    { q: 'Perhatikan besaran-besaran berikut: (1) massa, (2) gaya, (3) suhu, (4) waktu. Yang termasuk besaran pokok adalah...', o: ['(1), (2), dan (3)', '(2) dan (4)', '(1), (3), dan (4)', '(1) dan (3)'], a: 3, d: 'LOTS' },
+    { q: 'Nilai 0,0056 m jika ditulis dalam notasi ilmiah yang benar adalah...', o: ['56 \u00D7 10\u207B\u2074 m', '5,6 \u00D7 10\u207B\u00B3 m', '0,56 \u00D7 10\u207B\u00B2 m', '5,6 \u00D7 10\u207B\u2074 m'], a: 1, d: 'LOTS' },
+    { q: 'Hasil pengukuran diameter koin adalah 2,54 cm dan tebalnya 0,20 cm. Menurut aturan angka penting, volume silinder koin (V = \u03C0r\u00B2t) paling tepat dilaporkan dengan ... angka penting.', o: ['2', '3', '4', '5'], a: 0, d: 'HOTS' },
+    { q: 'Sebuah mobil bergerak lurus dengan kecepatan konstan 72 km/jam. Waktu yang dibutuhkan mobil untuk menempuh jarak 500 m adalah...', o: ['20 s', '30 s', '25 s', '36 s'], a: 2, d: 'HOTS' },
+    { q: 'Grafik v-t (kecepatan terhadap waktu) sebuah benda berupa garis lurus mendatar di atas sumbu t. Jenis gerak benda tersebut adalah...', o: ['GLB (gerak lurus beraturan)', 'GLBB dipercepat', 'GLBB diperlambat', 'gerak jatuh bebas'], a: 0, d: 'LOTS' },
+    { q: 'Sebuah benda mula-mula diam, kemudian dipercepat 4 m/s\u00B2 selama 3 s. Jarak yang ditempuh benda dalam selang waktu itu adalah...', o: ['12 m', '18 m', '24 m', '36 m'], a: 1, d: 'HOTS' },
+    { q: 'Sebuah bola dilempar vertikal ke atas dengan kecepatan awal 20 m/s (g = 10 m/s\u00B2). Kecepatan bola setelah 3 s adalah...', o: ['10 m/s ke bawah', '10 m/s ke atas', '30 m/s ke bawah', '50 m/s ke atas'], a: 0, d: 'HOTS' },
+    { q: 'Sebuah benda bermassa 4 kg berada di lantai licin, diberi gaya horizontal 12 N. Percepatan benda tersebut adalah...', o: ['2 m/s\u00B2', '3 m/s\u00B2', '4 m/s\u00B2', '8 m/s\u00B2'], a: 1, d: 'LOTS' },
+    { q: 'Saat bus tiba-tiba mengerem, penumpang cenderung terlempar ke depan. Fenomena ini merupakan akibat dari...', o: ['hukum I Newton (inersia)', 'hukum II Newton (F = ma)', 'hukum III Newton (aksi-reaksi)', 'hukum kekekalan energi'], a: 0, d: 'LOTS' },
+    { q: 'Sebuah balok bermassa 2 kg ditarik dengan gaya 10 N membentuk sudut 60\u00B0 terhadap bidang horizontal (sin 60\u00B0 = 0,5\u221A3; cos 60\u00B0 = 0,5) pada lantai licin. Percepatan balok adalah...', o: ['1,5 m/s\u00B2', '2,5 m/s\u00B2', '3,5 m/s\u00B2', '5 m/s\u00B2'], a: 1, d: 'HOTS' },
+    { q: 'Kotak bermassa 10 kg berada pada lantai. Jika percepatan gravitasi g = 10 m/s\u00B2, besar gaya normal yang bekerja pada kotak saat diam adalah...', o: ['10 N', '50 N', '100 N', '200 N'], a: 2, d: 'LOTS' },
+    { q: 'Sebuah benda bermassa 2 kg bergerak dengan kecepatan 6 m/s. Energi kinetik benda tersebut adalah...', o: ['12 J', '24 J', '36 J', '72 J'], a: 2, d: 'LOTS' },
+    { q: 'Gaya sebesar 50 N mendorong benda dan menyebabkan benda berpindah 4 m searah gaya. Usaha yang dilakukan gaya tersebut adalah...', o: ['100 J', '125 J', '200 J', '250 J'], a: 2, d: 'LOTS' },
+    { q: 'Sebuah benda bermassa 5 kg diangkat tegak dari lantai ke meja setinggi 1,6 m (g = 10 m/s\u00B2). Usaha yang dilakukan untuk melawan gaya berat benda adalah...', o: ['8 J', '32 J', '80 J', '800 J'], a: 2, d: 'LOTS' },
+    { q: 'Bola bermassa 0,5 kg jatuh bebas dari ketinggian 10 m (g = 10 m/s\u00B2). Kecepatan bola tepat sebelum menyentuh tanah adalah...', o: ['10 m/s', '20 m/s', '100 m/s', '14 m/s'], a: 3, d: 'HOTS' },
+    { q: 'Sebuah mobil bermassa 1.000 kg melaju dengan kecepatan 20 m/s. Agar berhenti dalam waktu 4 s secara beraturan, gaya pengereman yang diperlukan adalah...', o: ['2.000 N', '4.000 N', '5.000 N', '8.000 N'], a: 2, d: 'HOTS' },
+    { q: 'Sebuah bola bermassa 0,2 kg jatuh bebas dan saat menyentuh lantai kelajuannya 10 m/s, kemudian memantul dengan kelajuan 6 m/s. Perubahan momentum bola saat memantul adalah...', o: ['0,8 kg\u00B7m/s', '1,2 kg\u00B7m/s', '2,0 kg\u00B7m/s', '3,2 kg\u00B7m/s'], a: 3, d: 'HOTS' },
+    { q: 'Sebuah penyelam berada pada kedalaman 5 m di dalam air murni (massa jenis air = 1.000 kg/m\u00B3; g = 10 m/s\u00B2). Tekanan hidrostatis yang dialami penyelam adalah...', o: ['5.000 Pa', '50.000 Pa', '500.000 Pa', '5.000.000 Pa'], a: 1, d: 'LOTS' },
+    { q: 'Benda yang sama diberi gaya tekan yang sama, tetapi diletakkan pada dua posisi berbeda. Kedudukan benda yang menghasilkan tekanan paling besar terhadap lantai adalah...', o: ['posisi rebah dengan bidang singgung terbesar', 'tekanan sama untuk semua posisi', 'tergantung benda berongga atau padat', 'posisi berdiri dengan bidang singgung terkecil'], a: 3, d: 'LOTS' },
+    { q: 'Sebuah batu bermassa 0,6 kg bervolume 240 cm\u00B3 ditenggelamkan seluruhnya dalam air (massa jenis air = 1.000 kg/m\u00B3; g = 10 m/s\u00B2). Gaya Archimedes yang bekerja pada batu adalah...', o: ['2,4 N', '4,8 N', '6,0 N', '24 N'], a: 0, d: 'HOTS' },
+    { q: 'Sebuah benda di udara beratnya 40 N, tetapi saat terendam seluruhnya dalam air beratnya tampak 30 N. Gaya Archimedes pada benda tersebut adalah...', o: ['10 N', '30 N', '40 N', '70 N'], a: 0, d: 'LOTS' },
+    { q: 'Termometer X memiliki titik beku air 20\u00B0X dan titik didih air 120\u00B0X. Jika suhu suatu zat cair diukur 70\u00B0X, suhu zat cair tersebut pada skala Celsius adalah...', o: ['40 \u00B0C', '50 \u00B0C', '60 \u00B0C', '70 \u00B0C'], a: 1, d: 'HOTS' },
+    { q: 'Gelombang di sepanjang tali membutuhkan waktu 2 s untuk merambat sejauh 8 m. Cepat rambat gelombang tersebut adalah...', o: ['2 m/s', '8 m/s', '16 m/s', '4 m/s'], a: 3, d: 'LOTS' },
+  ],
+};

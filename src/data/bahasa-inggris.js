@@ -1,0 +1,32 @@
+'use strict';
+
+module.exports = {
+  subject: 'Bahasa Inggris',
+  items: [
+    { q: 'Rina meets her new classmate in the morning. What is the most appropriate greeting?', o: ['Good night', 'See you later', 'Goodbye', 'Good morning'], a: 3, d: 'LOTS' },
+    { q: 'Dita: "Hi, my name is Dita. Nice to meet you." Sari: "Hello, Dita. I am Sari. ..." The best response to complete the dialogue is...', o: ['Goodbye', 'I\'m fine, thanks', 'How do you do? Nice to meet you too', 'See you tomorrow'], a: 2, d: 'LOTS' },
+    { q: 'When you want to know someone\'s hobby, you can ask...', o: ['"Where do you live?"', '"What is your hobby?"', '"How old are you?"', '"When were you born?"'], a: 1, d: 'LOTS' },
+    { q: 'The purpose of a descriptive text is...', o: ['To retell past events in chronological order', 'To describe a particular person, place, or thing in detail', 'To explain how to make something step by step', 'To persuade readers to agree with an opinion'], a: 1, d: 'LOTS' },
+    { q: 'The generic structure of a descriptive text consists of...', o: ['Orientation, complication, resolution', 'Thesis, arguments, and reiteration', 'Goal, materials, and steps', 'Identification and description'], a: 3, d: 'LOTS' },
+    { q: '"My grandmother is a very kind woman. She always helps everyone in our village." The underlined word "kind" describes...', o: ['a person\'s appearance', 'a person\'s characteristic', 'a person\'s job', 'a person\'s age'], a: 1, d: 'HOTS' },
+    { q: 'A recount text is written mainly to...', o: ['describe the features of an object', 'entertain readers with a fantasy story', 'retell past experiences or events', 'give instructions to do something'], a: 2, d: 'LOTS' },
+    { q: 'Which tense is mostly used in a recount text?', o: ['Simple past tense', 'Simple present tense', 'Present continuous tense', 'Future tense'], a: 0, d: 'LOTS' },
+    { q: 'Last holiday, my family and I ... to Yogyakarta and visited Borobudur Temple.', o: ['go', 'goes', 'went', 'gone'], a: 2, d: 'LOTS' },
+    { q: 'The structure of a procedure text is...', o: ['Goal/aim, materials, and steps', 'Orientation and events', 'Identification and description', 'Thesis and arguments'], a: 0, d: 'LOTS' },
+    { q: '"... the rice with two glasses of water before cooking it." The correct word to complete the instruction is...', o: ['Washing', 'Washes', 'Washed', 'Wash'], a: 3, d: 'HOTS' },
+    { q: 'Read this sentence: "She ... her homework every evening." The correct verb form is...', o: ['do', 'does', 'did', 'doing'], a: 1, d: 'LOTS' },
+    { q: 'They ... football in the field at the moment.', o: ['play', 'plays', 'are playing', 'played'], a: 2, d: 'LOTS' },
+    { q: 'My brother ... to school by bicycle yesterday because his motorcycle was broken.', o: ['goes', 'go', 'will go', 'went'], a: 3, d: 'HOTS' },
+    { q: 'What is the antonym of the word "brave"?', o: ['Clever', 'Confident', 'Coward', 'Careful'], a: 2, d: 'LOTS' },
+    { q: 'What is the synonym of the word "happy"?', o: ['Glad', 'Sad', 'Angry', 'Tired'], a: 0, d: 'LOTS' },
+    { q: 'The word "beautiful" has a similar meaning to...', o: ['ugly', 'tidy', 'ordinary', 'gorgeous'], a: 3, d: 'LOTS' },
+    { q: 'Choose the correct sentence with the right adjective order.', o: ['She has a red big bag.', 'She has a big red bag.', 'She has a bag big red.', 'She has a red bag big.'], a: 1, d: 'HOTS' },
+    { q: 'Andi: "...?" Budi: "I am sixteen years old." The suitable question to complete the dialogue is...', o: ['What is your name?', 'Where are you from?', 'How old are you?', 'How do you do?'], a: 2, d: 'LOTS' },
+    { q: 'In a self-introduction, after mentioning your name, it is common to...', o: ['say goodbye immediately', 'end the conversation', 'ask for money', 'tell where you come from or study'], a: 3, d: 'LOTS' },
+    { q: '"Could you please pass me the book?" The underlined expression shows...', o: ['an invitation', 'a request', 'a complaint', 'an apology'], a: 1, d: 'HOTS' },
+    { q: 'Arrange the following jumbled words into a good sentence: "usually / my mother / in the morning / cooks / breakfast". The correct arrangement is...', o: ['My mother usually cooks breakfast in the morning.', 'My mother cooks usually breakfast in the morning.', 'Usually my mother breakfast cooks in the morning.', 'My mother cooks breakfast usually in the morning.'], a: 0, d: 'HOTS' },
+    { q: 'Read the text: "Borobudur is a famous Buddhist temple located in Central Java. It was built in the 9th century and has many stupas." The text mainly tells us about...', o: ['the history of Central Java', 'a description of Borobudur Temple', 'how to build a temple', 'the story of a Buddhist monk'], a: 1, d: 'HOTS' },
+    { q: 'What is the appropriate response for the expression "Thank you for your help"?', o: ['You are welcome.', 'I am sorry to hear that.', 'That\'s too bad.', 'Never mind, goodbye.'], a: 0, d: 'LOTS' },
+    { q: 'The word "we" in the sentence "We are students of class X" refers to...', o: ['the writer and other people including the speaker', 'only one person', 'the person being spoken to', 'other people far away'], a: 0, d: 'HOTS' },
+  ],
+};

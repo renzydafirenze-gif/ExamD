@@ -1,0 +1,32 @@
+'use strict';
+
+module.exports = {
+  subject: 'Sejarah',
+  items: [
+    { q: 'Ilmu sejarah mengkaji manusia sebagai subjek sekaligus objek. Tokoh Indonesia yang mendefinisikan sejarah sebagai "manusia, ruang, dan waktu" adalah ...', o: ['Mohammad Ali', 'J.V. Bryce', 'Kuntowijoyo', 'R.G. Soekmono'], a: 0, d: 'LOTS' },
+    { q: 'Urutan metode penelitian sejarah yang benar adalah ...', o: ['Verifikasi, heuristik, historiografi, interpretasi', 'Heuristik, verifikasi, interpretasi, historiografi', 'Interpretasi, verifikasi, heuristik, historiografi', 'Heuristik, interpretasi, historiografi, verifikasi'], a: 1, d: 'LOTS' },
+    { q: 'Seorang peneliti menemukan fosil tengkorak, gigi, dan tulang paha di Trinil, Sungai Bengawan Solo, pada 1891. Temuan fosil tersebut dinamakan ...', o: ['Homo wajakensis', 'Meganthropus paleojavanicus', 'Pithecanthropus erectus', 'Homo floresiensis'], a: 2, d: 'HOTS' },
+    { q: 'Ciri kehidupan manusia pada masa neolithikum (masa bermesin baru) adalah ...', o: ['mata pencaharian berburu dan meramu', 'hidup berpindah-pindah (nomaden)', 'hanya percaya pada kekuatan alam tanpa ritual', 'bermata pencaharian bercocok tanam'], a: 3, d: 'LOTS' },
+    { q: 'Penelusuran kehidupan masa praaksara banyak didasarkan pada benda-benda hasil karya manusia yang disebut ...', o: ['artefak', 'fosil', 'megalit', 'naskah'], a: 0, d: 'LOTS' },
+    { q: 'Prasasti Yupa berhuruf Pallawa dan berbahasa Sanskerta berasal dari kerajaan Hindu tertua di Indonesia, yaitu ...', o: ['Tarumanegara', 'Kutai', 'Sriwijaya', 'Mataram Kuno'], a: 1, d: 'LOTS' },
+    { q: 'Prasasti Ciaruteun mencantumkan jejak kaki seorang raja yang dipersamakan dengan jejak kaki Dewa Wisnu sebagai lambang keagungan. Raja tersebut adalah ...', o: ['Mulawarman', 'Adityawarman', 'Purnawarman', 'Airlangga'], a: 2, d: 'HOTS' },
+    { q: 'Dinasti Syailendra yang menganut agama Buddha di Mataram Kuno membangun candi ...', o: ['Prambanan', 'Candi Sukuh', 'Candi Penataran', 'Borobudur'], a: 3, d: 'LOTS' },
+    { q: 'Rahib Tiongkok yang singgah dan berlabuh di Sriwijaya pada 671 M untuk belajar bahasa Sanskerta adalah ...', o: ['I-Tsing', 'Fa-Hien', 'Cheng Ho', 'Marco Polo'], a: 0, d: 'LOTS' },
+    { q: 'Sumpah Palapa yang menjadi lambang pengabdiannya dalam penyatuan Nusantara dibacakan oleh ...', o: ['Hayam Wuruk', 'Gajah Mada', 'Raden Wijaya', 'Tribhuwana Tunggadewi'], a: 1, d: 'LOTS' },
+    { q: 'Kitab yang berisi semboyan "Bhinneka Tunggal Ika" sebagai lambang toleransi Majapahit adalah ...', o: ['Negarakertagama', 'Arjunawiwaha', 'Sutasoma', 'Pararaton'], a: 2, d: 'LOTS' },
+    { q: 'Setelah wafatnya Hayam Wuruk (1389), Majapahit mengalami kemunduran. Penyebab utamanya adalah ...', o: ['serangan besar dari Kerajaan Demak', 'wabah penyakit dan bencana alam besar', 'kerajaan kehabisan seluruh sumber kekayaan', 'tidak ada penerus sekaliber Hayam Wuruk dan Gajah Mada serta muncul perebutan kekuasaan'], a: 3, d: 'HOTS' },
+    { q: 'Teori masuknya Islam ke Indonesia yang menyatakan Islam dibawa dari India dan didukung oleh Snouck Hurgronje adalah teori ...', o: ['Gujarat', 'Mekkah', 'Persia', 'Cina'], a: 0, d: 'LOTS' },
+    { q: 'Kerajaan Islam pertama di Indonesia yang didirikan oleh Sultan Malikussaleh adalah ...', o: ['Demak', 'Samudra Pasai', 'Aceh Darussalam', 'Banten'], a: 1, d: 'LOTS' },
+    { q: 'Dalam dakwah Wali Songo, Sunan Kalijaga dikenal karena menyebarkan Islam melalui media seni, antara lain ...', o: ['topeng dadah', 'islamisasi lewat perdagangan di pesisir', 'wayang dan tembang (suluk)', 'penulisan kitab tasawuf'], a: 2, d: 'HOTS' },
+    { q: 'VOC resmi berdiri pada 1602 setelah memperoleh izin monopoli dagang (hak octrooi) dari ...', o: ['Raja Portugal', 'Raja Spanyol', 'Pemerintah Inggris', 'Pemerintah Belanda'], a: 3, d: 'LOTS' },
+    { q: 'Hak octrooi VOC meliputi monopoli dagang, mencetak uang, mengangkat pejabat, berperang, dan membuat perjanjian dengan kerajaan-kerajaan di Timur. Hal ini menunjukkan VOC berfungsi sebagai ...', o: ['alat negara (instrument of government) Belanda di wilayah Timur', 'perkumpulan saudagar Belanda biasa', 'lembaga pendidikan dan misionaris', 'organisasi pergerakan nasional'], a: 0, d: 'HOTS' },
+    { q: 'Pembangunan jalan pos Anyer-Panarukan pada masa Hindia Belanda diperintahkan oleh ...', o: ['Herman Willem Daendels', 'Raffles', 'Van den Bosch', 'Van der Capellen'], a: 1, d: 'LOTS' },
+    { q: 'Dampak sosial utama pembangunan Jalan Daendels (Anyer-Panarukan) bagi rakyat pribumi adalah ...', o: ['mekanisasi pertanian meningkat pesat', 'kesejahteraan rakyat meningkat', 'penderitaan rakyat karena kerja paksa (rodi) dan banyak korban jiwa', 'penduduk bebas memilih pekerjaan sesuai kemauan'], a: 2, d: 'HOTS' },
+    { q: 'Perang Padri yang terjadi di Sumatera Barat dipimpin oleh ...', o: ['Cut Nyak Dien', 'Sisingamangaraja XII', 'Pattimura', 'Tuanku Imam Bonjol'], a: 3, d: 'LOTS' },
+    { q: 'Trias van Deventer dalam politik etis Belanda berisi program ...', o: ['irigasi, edukasi, dan transmigrasi', 'edukasi, monopoli, dan rodi', 'irigasi, culturstelsel, dan monopoli', 'transmigrasi, monopoli, dan rodi'], a: 0, d: 'LOTS' },
+    { q: 'Tanggal 20 Mei diperingati sebagai Hari Kebangkitan Nasional karena pada tanggal tersebut tahun 1908 berdiri organisasi ...', o: ['Sarekat Islam', 'Budi Utomo', 'Indische Partij', 'Perhimpunan Indonesia'], a: 1, d: 'LOTS' },
+    { q: 'Pada 8 Maret 1942, Belanda menyerah tanpa syarat kepada Jepang dalam perjanjian Kalijati. Penyebab utama penyerahan tersebut adalah ...', o: ['tekanan politik dari pemerintah Inggris', 'kemenangan diplomasi golongan muda', 'kekalahan militer Belanda di berbagai front hingga Kalijati', 'pemberontakan rakyat pribumi terhadap Belanda'], a: 2, d: 'HOTS' },
+    { q: 'Badan yang dibentuk Jepang pada 7 Agustus 1945 diketuai Ir. Soekarno untuk mempersiapkan kemerdekaan Indonesia adalah ...', o: ['Otomitou', 'BPUPKI', 'Chuo Sangi In', 'PPKI'], a: 3, d: 'LOTS' },
+    { q: 'Golongan muda membawa Soekarno-Hatta ke Rengasdengklok pada 16 Agustus 1945. Tindakan tersebut dilakukan karena ...', o: ['golongan muda menuntut proklamasi dilakukan segera tanpa campur tangan Jepang', 'Jepang mengundang Soekarno-Hatta ke Dai Nippon', 'Belanda berniat menangkap Soekarno-Hatta', 'golongan tua ingin proklamasi dilakukan di Jakarta lebih dulu'], a: 0, d: 'HOTS' },
+  ],
+};

@@ -1,0 +1,32 @@
+'use strict';
+
+module.exports = {
+  subject: 'Biologi',
+  items: [
+    { q: "Unit terkecil penyusun makhluk hidup yang dapat menjalankan fungsi kehidupan secara mandiri disebut...", o: ['sistem organ', 'organ', 'jaringan', 'sel'], a: 3, d: 'LOTS' },
+    { q: "Proses tumbuhan hijau menghasilkan zat makanan dengan bantuan cahaya matahari disebut...", o: ['fotosintesis', 'transpirasi', 'fermentasi', 'respirasi'], a: 0, d: 'LOTS' },
+    { q: "Pada daun, perpindahan hasil fotosintesis ke seluruh bagian tumbuhan diangkut oleh...", o: ['floem', 'xilem', 'kambium', 'stomata'], a: 0, d: 'LOTS' },
+    { q: "Organ pernapasan tempat terjadinya pertukaran oksigen dan karbon dioksida pada manusia adalah...", o: ['faring', 'alveolus', 'bronkus', 'trakea'], a: 1, d: 'LOTS' },
+    { q: "Makhluk hidup pengurai sisa organisme yang telah mati dalam ekosistem disebut...", o: ['dekomposer', 'produsen', 'konsumen tingkat I', 'karnivora'], a: 0, d: 'LOTS' },
+    { q: "Semua populasi makhluk hidup yang hidup dan berinteraksi pada suatu daerah tertentu membentuk suatu...", o: ['ekosistem', 'biosfer', 'individu', 'komunitas'], a: 3, d: 'LOTS' },
+    { q: "Sebuah ekosistem yang komponen biotik dan abiotiknya saling berinteraksi terbentuk dari organisme sejenis disebut...", o: ['populasi', 'ekoton', 'habitat', 'komunitas'], a: 0, d: 'LOTS' },
+    { q: "Keanekaragaman hayati yang terjadi akibat variasi gen di dalam satu spesies disebut keanekaragaman tingkat...", o: ['spesies', 'ekosistem', 'gen', 'komunitas'], a: 2, d: 'LOTS' },
+    { q: "Urutan tingkatan organisasi kehidupan dari yang paling sederhana ke kompleks adalah...", o: ['individu → sel → organ → jaringan → sistem organ', 'sel → organ → jaringan → individu → sistem organ', 'sel → jaringan → organ → sistem organ → individu', 'jaringan → sel → organ → sistem organ → individu'], a: 2, d: 'LOTS' },
+    { q: "Ciri khas sel tumbuhan yang tidak dimiliki oleh sel hewan adalah...", o: ['sitoplasma', 'ribosom', 'dinding sel & kloroplas', 'membran sel'], a: 2, d: 'LOTS' },
+    { q: "Struktur sel yang berfungsi sebagai pusat pengendali sel dan tempat tersimpannya materi genetik adalah...", o: ['badan golgi', 'mitokondria', 'nukleus', 'ribosom'], a: 2, d: 'LOTS' },
+    { q: "Bagian sel yang berperan sebagai tempat respirasi sel (menghasilkan energi ATP) adalah...", o: ['lisosom', 'nukleus', 'vakuola', 'mitokondria'], a: 3, d: 'LOTS' },
+    { q: "Virus yang menyerang bakteri disebut...", o: ['prion', 'viroid', 'retrovirus', 'bakteriofag'], a: 3, d: 'LOTS' },
+    { q: "Bakteri dapat memperbanyak diri secara aseksual dengan cara membelah diri yang disebut...", o: ['transformasi', 'pembelahan biner', 'konjugasi', 'transduksi'], a: 1, d: 'LOTS' },
+    { q: "Peran penting bakteri Rhizobium di dalam bintil akar tanaman kacang-kacangan adalah...", o: ['mengikat nitrogen bebas', 'menghasilkan antibiotik', 'memfermentasi laktosa', 'menguraikan zat organik'], a: 0, d: 'LOTS' },
+    { q: "Organisme bersel satu yang memiliki inti sel sejati (eukariot) dan hidup di tempat lembap seperti Protista disebut juga sebagai...", o: ['prokariot', 'eukariot mikroskopis', 'akariot', 'monera'], a: 1, d: 'LOTS' },
+    { q: "Jamur berperan penting dalam ekosistem sebagai..., misalnya jenis kapur changkok hulu yang hidup pada kayu", o: ['produsen', 'predator', 'dekomposer', 'konsumen'], a: 2, d: 'LOTS' },
+    { q: "Dalam klasifikasi modern (5 kingdom), tumbuhan dikelompokkan ke dalam kingdom...", o: ['Protista', 'Animalia', 'Plantae', 'Fungi'], a: 2, d: 'LOTS' },
+    { q: "Bakteri termasuk organisme prokariotik karena...", o: ['bisa membelah diri', 'memiliki dinding sel', 'memiliki ribosom', 'tidak memiliki membran inti (karioteka)'], a: 3, d: 'LOTS' },
+    { q: "Seorang petani menemukan tanaman jagungnya layu dan pucat meski disiram dan dipupuk secara teratur. Setelah diperiksa, akarnya terserang hama. Pada tingkat organisasi kehidupan, tanaman jagung yang layu tersebut berada pada tingkat...", o: ['populasi', 'jaringan', 'individu', 'sel'], a: 2, d: 'HOTS' },
+    { q: "Pada ekosistem kolam, fitoplankton dikonsumsi zooplankton. Zooplankton dimakan ikan kecil, sedangkan ikan kecil dimakan ikan besar. Jika populasi fitoplankton menurun drastis, yang paling cepat terpengaruh adalah...", o: ['ikan besar, karena berada di puncak piramida', 'dekomposer, karena sumber makanannya berkurang', 'zooplankton, karena berada pada trofik tepat di atas fitoplankton', 'ikan kecil dan ikan besar secara bersamaan'], a: 2, d: 'HOTS' },
+    { q: "Dua ekosistem yang sama-sama berada di daerah tropis bisa memiliki komposisi spesies yang berbeda. Faktor abiotik yang PALING menentukan perbedaan jenis tumbuhan antara hutan tropis dataran tinggi dan dataran rendah adalah...", o: ['panjang hari', 'suhu dan ketinggian tempat', 'jenis batu induk', 'kelembapan udara saja'], a: 1, d: 'HOTS' },
+    { q: "Di suatu rawa terjadi pencemaran deterjen yang menyebabkan eutrofikasi. Akibat yang paling mungkin terjadi pada rantai makanan di rawa tersebut adalah...", o: ['produsen punah sehingga rantai makanan tetap stabil', 'alga blooming → oksigen larut berkurang → ikan mati massal', 'dekomposer berkurang karena makanan berkurang', 'populasi ikan meningkat karena nutrisi bertambah'], a: 1, d: 'HOTS' },
+    { q: "Seorang siswa mengamati sel dengan mikroskop dan melihat adanya dinding sel, vakuola besar, serta kloroplas. Kesimpulan yang paling tepat adalah bahwa sel tersebut berasal dari...", o: ['bakteri', 'hewan tingkat lanjut', 'virus', 'tumbuhan'], a: 3, d: 'HOTS' },
+    { q: "Ibu memasak sayur bayam lalu menyimpannya di kulkas untuk mencegah cepat busuk. Tindakan tersebut dapat mengawetkan makanan karena dingin dapat...", o: ['membunuh jamur dan menghambat kerja enzim', 'membunuh semua bakteri pembusuk', 'menghambat kerja enzim dan pembelahan bakteri pembusuk', 'mematikan virus pembusuk'], a: 2, d: 'HOTS' },
+  ],
+};

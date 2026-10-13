@@ -1,0 +1,32 @@
+'use strict';
+
+module.exports = {
+  subject: 'Bahasa Indonesia',
+  items: [
+    { q: 'Ciri utama teks deskripsi adalah...', o: ['Menceritakan peristiwa secara kronologis lengkap dengan alur', 'Membujuk pembaca agar mengikuti pendapat penulis', 'Menggambarkan suatu objek secara rinci sehingga pembaca seolah-olah dapat melihat dan merasakannya langsung', 'Menjelaskan langkah-langkah membuat atau melakukan sesuatu'], a: 2, d: 'LOTS' },
+    { q: 'Tujuan utama teks eksposisi adalah...', o: ['Menjelaskan atau menginformasikan suatu topik kepada pembaca', 'Menghibur pembaca dengan cerita fiksi', 'Menggambarkan pemandangan alam secara rinci', 'Mengajak pembaca melakukan aksi tertentu'], a: 0, d: 'LOTS' },
+    { q: 'Struktur teks eksposisi yang benar adalah...', o: ['Orientasi, komplikasi, resolusi', 'Tesis, rangkaian argumen, penegasan ulang', 'Identifikasi, deskripsi', 'Abstrak, orientasi, koda'], a: 1, d: 'LOTS' },
+    { q: 'Berikut ini yang merupakan ciri teks narasi adalah...', o: ['Hanya berisi data dan angka statistik', 'Tidak memiliki tokoh maupun latar', 'Selalu berbentuk pantun dan puisi', 'Memuat alur, tokoh, dan konflik dalam cerita'], a: 3, d: 'LOTS' },
+    { q: 'Teks persuasi adalah teks yang...', o: ['Menjelaskan proses terjadinya suatu fenomena alam', 'Berisi ajakan atau bujukan agar pembaca mengikuti kehendak penulis', 'Menceritakan pengalaman pribadi penulis', 'Menggambarkan wujud suatu benda secara detail'], a: 2, d: 'LOTS' },
+    { q: 'Perhatikan paragraf berikut: "Sampah plastik membutuhkan waktu ratusan tahun untuk terurai. Setiap tahun, jutaan ton sampah plastik mencemari laut dan membahayakan biota di dalamnya." Ide pokok paragraf tersebut adalah...', o: ['Proses penguraian sampah organik', 'Bahaya sampah plastik bagi lingkungan', 'Jenis-jenis sampah di dasar laut', 'Cara memanfaatkan sampah plastik'], a: 1, d: 'HOTS' },
+    { q: 'Kalimat utama dalam paragraf deduktif umumnya terletak di...', o: ['awal paragraf', 'tengah paragraf', 'akhir paragraf', 'di luar paragraf'], a: 0, d: 'LOTS' },
+    { q: 'Manakah kalimat berikut yang merupakan opini?', o: ['Indonesia merdeka pada tanggal 17 Agustus 1945.', 'Air mendidih pada suhu 100 derajat Celsius.', 'Indonesia terdiri atas ribuan pulau.', 'Menurut saya, film tersebut paling menarik tahun ini.'], a: 3, d: 'HOTS' },
+    { q: 'Struktur sebuah pidato yang tepat adalah...', o: ['pembukaan, isi, penutup', 'tesis, argumen, simpulan', 'orientasi, komplikasi, resolusi', 'identifikasi, deskripsi, simpulan'], a: 0, d: 'LOTS' },
+    { q: 'Pola sajak yang benar untuk pantun adalah...', o: ['a-a-a-a', 'a-b-a-b', 'a-a-b-a', 'a-b-b-a'], a: 2, d: 'LOTS' },
+    { q: 'Perhatikan pantun berikut: "Kalau ada sumur di ladang / bolehlah kita menunggu / kalau ada umur yang panjang / bolehlah kita berjumpa." Pantun tersebut termasuk jenis pantun...', o: ['nasihat', 'perpisahan', 'jenaka', 'teka-teki'], a: 1, d: 'HOTS' },
+    { q: 'Ciri teks hikayat adalah...', o: ['Dikarang oleh pengarang yang namanya selalu tercantum jelas', 'Menggunakan bahasa sehari-hari yang modern', 'Hanya menceritakan kejadian nyata di masa kini', 'Prosa lama berisi kehidupan kerajaan yang penuh kesultanan dan bersifat anonim'], a: 3, d: 'LOTS' },
+    { q: 'Salah satu ciri kebahasaan hikayat adalah...', o: ['Penggunaan kata arkais seperti "hatta" dan "syahdan"', 'Banyak memakai istilah teknologi modern', 'Penggunaan bahasa daerah setempat secara dominan', 'Penulisan dengan bahasa asing seperti Inggris'], a: 1, d: 'LOTS' },
+    { q: 'Anekdot adalah...', o: ['Cerita lucu yang mengandung kritik terhadap tokoh atau masyarakat', 'Cerita rakyat tentang asal-usul suatu tempat', 'Tulisannya pendek berisi pengalaman pribadi', 'Cerita panjang dengan banyak tokoh istana'], a: 0, d: 'LOTS' },
+    { q: 'Struktur cerpen yang lengkap dan berurutan adalah...', o: ['Tesis, argumen, penegasan ulang', 'Identifikasi, deskripsi', 'Abstrak, orientasi, komplikasi, evaluasi, resolusi, koda', 'Orientasi, komplikasi, resolusi'], a: 2, d: 'LOTS' },
+    { q: 'Berikut ini yang BUKAN merupakan unsur intrinsik cerpen adalah...', o: ['Tema', 'Latar', 'Alur', 'Kondisi sosial penulis'], a: 3, d: 'LOTS' },
+    { q: 'Perhatikan penggalan berikut: "Pagi itu, Udin berjalan menyusuri pematang sawah yang hijau sambil menikmati embun yang masih menempel." Latar tempat pada penggalan cerita tersebut adalah...', o: ['pasar', 'sawah', 'pantai', 'sekolah'], a: 0, d: 'HOTS' },
+    { q: 'Perhatikan kutipan berikut: "Aku berlari menyusuri lorong, jantungku berdegup kencang. Entah apa yang akan menungguku di ujung sana." Sudut pandang yang digunakan dalam kutipan tersebut adalah...', o: ['orang ketiga serba tahu', 'orang pertama pelaku utama', 'orang kedua', 'orang ketiga pengamat'], a: 1, d: 'HOTS' },
+    { q: 'Seorang siswa sering menunda belajar. Ketika ujian tiba, ia gagal meskipun sebenarnya cerdas. Amanat yang sesuai dengan cerita tersebut adalah...', o: ['Kecerdasan menjamin keberhasilan seseorang', 'Ujian tidak penting bagi seorang siswa', 'Jangan menunda pekerjaan hingga saat terakhir', 'Kegagalan adalah akhir dari segalanya'], a: 2, d: 'HOTS' },
+    { q: 'Konjungsi (kata hubung) yang menyatakan hubungan sebab adalah...', o: ['karena', 'tetapi', 'dan', 'atau'], a: 0, d: 'LOTS' },
+    { q: 'Manakah kalimat berikut yang paling efektif?', o: ['Para siswa-siswa harus disiplin.', 'Kedua siswa itu meraih juara.', 'Kedua orang siswa itu meraih juara.', 'Semua murid-murid hadir tepat waktu.'], a: 1, d: 'HOTS' },
+    { q: 'Penulisan kata yang sesuai dengan kaidah kata baku adalah...', o: ['praktek', 'obyek', 'aktifis', 'risiko'], a: 3, d: 'LOTS' },
+    { q: 'Dalam kalimat "Karena hujan deras, pertandingan sepak bola ditunda", penggunaan tanda koma berfungsi untuk...', o: ['memisahkan kata benda yang berurutan dalam seri', 'menandai kutipan langsung seseorang', 'memisahkan anak kalimat yang mendahului induk kalimat', 'mengakhiri kalimat berita'], a: 2, d: 'HOTS' },
+    { q: 'Pronomina persona pertama yang tepat digunakan dalam surat resmi adalah...', o: ['saya', 'aku', 'gua', 'beta'], a: 0, d: 'HOTS' },
+    { q: 'Bentuk kalimat tidak langsung dari pernyataan Ibu berkata, "Adik sedang belajar." adalah...', o: ['Ibu berkata bahwa adik belajar kemarin.', 'Ibu berkata bahwa adik akan belajar.', 'Ibu berkata bahwa ia sedang tidur.', 'Ibu berkata bahwa adik sedang belajar.'], a: 3, d: 'HOTS' },
+  ],
+};

@@ -1,0 +1,32 @@
+'use strict';
+
+module.exports = {
+  subject: 'Matematika',
+  items: [
+    { q: 'Nilai dari 2^3 + 2^2 adalah...', o: ['10', '12', '16', '32'], a: 1, d: 'LOTS' },
+    { q: 'Bentuk sederhana dari (a^3)^2 adalah...', o: ['a^5', 'a^8', 'a^9', 'a^6'], a: 3, d: 'LOTS' },
+    { q: 'Nilai dari 5^0 + 3^1 adalah...', o: ['3', '8', '5', '4'], a: 3, d: 'LOTS' },
+    { q: 'Bentuk logaritma dari 2^5 = 32 adalah...', o: ['log 2 32 = 5', 'log 32 2 = 5', 'log 5 32 = 2', 'log 2 5 = 32'], a: 0, d: 'LOTS' },
+    { q: 'Nilai dari ²log 8 adalah...', o: ['2', '8', '4', '3'], a: 3, d: 'LOTS' },
+    { q: 'Jika ²log 3 = p dan ²log 5 = q, maka ²log 15 = ...', o: ['p + q', 'p - q', 'p · q', 'p : q'], a: 0, d: 'HOTS' },
+    { q: 'Suku ke-10 dari barisan aritmetika 3, 7, 11, 15, ... adalah...', o: ['39', '43', '47', '51'], a: 0, d: 'LOTS' },
+    { q: 'Sebuah bakteri berkembang biak menjadi dua kali lipat setiap jam. Jika mula-mula ada 5 bakteri, banyak bakteri setelah 4 jam adalah...', o: ['40', '60', '80', '100'], a: 2, d: 'HOTS' },
+    { q: 'Rasio (r) dari barisan geometri 2, 6, 18, 54, ... adalah...', o: ['2', '6', '4', '3'], a: 3, d: 'LOTS' },
+    { q: 'Jumlah 10 suku pertama deret aritmetika dengan a = 2 dan b = 3 adalah...', o: ['155', '165', '175', '185'], a: 1, d: 'HOTS' },
+    { q: 'Vektor a = (3, -1) dan b = (2, 4). Hasil dari a + b adalah...', o: ['(6, -4)', '(5, 5)', '(1, 3)', '(5, 3)'], a: 3, d: 'LOTS' },
+    { q: 'Jika vektor a = (4, 6), maka 2a adalah...', o: ['(6, 8)', '(8, 12)', '(4, 6)', '(2, 3)'], a: 1, d: 'LOTS' },
+    { q: 'Sebuah drone bergerak 3 satuan ke timur lalu 4 satuan ke utara. Besar (panjang) vektor perpindahan drone tersebut adalah...', o: ['5 satuan', '6 satuan', '7 satuan', '12 satuan'], a: 0, d: 'HOTS' },
+    { q: 'Jika sin A = 3/5 dengan A sudut lancip, maka cos A = ...', o: ['3/4', '5/4', '4/5', '5/3'], a: 2, d: 'LOTS' },
+    { q: 'Nilai dari tan 45° adalah...', o: ['0', '1/2', '1', '√2'], a: 2, d: 'LOTS' },
+    { q: 'Sebuah tangga bersandar pada dinding membentuk sudut 60° dengan tanah. Jika panjang tangga 4 m, tinggi dinding yang dicapai puncak tangga adalah...', o: ['2 m', '2√3 m', '4√3 m', '8 m'], a: 1, d: 'HOTS' },
+    { q: 'Nilai dari sin 30° + cos 60° adalah...', o: ['0', '1/2', '1', '√3/2'], a: 2, d: 'LOTS' },
+    { q: 'Nilai x yang memenuhi sistem persamaan x + y = 7 dan x - y = 1 adalah...', o: ['2', '3', '4', '5'], a: 2, d: 'LOTS' },
+    { q: 'Harga 2 buku dan 1 pensil adalah Rp11.000,00. Harga 1 buku dan 2 pensil adalah Rp10.000,00. Harga 1 buku adalah...', o: ['Rp2.000,00', 'Rp3.000,00', 'Rp4.000,00', 'Rp6.000,00'], a: 2, d: 'HOTS' },
+    { q: 'Titik potong sumbu-y dari fungsi kuadrat f(x) = x² - 4x + 3 adalah...', o: ['(0, 1)', '(0, 3)', '(0, -4)', '(0, -3)'], a: 1, d: 'LOTS' },
+    { q: 'Titik puncak (balik maksimum) dari fungsi kuadrat f(x) = x² - 2x - 3 adalah...', o: ['(1, -4)', '(-1, 4)', '(1, 4)', '(-1, -4)'], a: 0, d: 'HOTS' },
+    { q: 'Nilai tengah (median) dari data 4, 6, 5, 8, 7 adalah...', o: ['5', '6', '7', '8'], a: 1, d: 'LOTS' },
+    { q: 'Rata-rata nilai ulangan 5 siswa adalah 80. Jika 4 siswa di antaranya memperoleh nilai 75, 85, 82, dan 78, maka nilai siswa kelima adalah...', o: ['78', '80', '82', '85'], a: 1, d: 'HOTS' },
+    { q: 'Sebuah dadu dan sekeping uang logam dilempar bersamaan. Banyak titik sampel (ruang sampel) kejadian tersebut adalah...', o: ['6', '8', '10', '12'], a: 3, d: 'LOTS' },
+    { q: 'Dalam sebuah kotak terdapat 4 bola merah dan 6 bola putih. Jika diambil satu bola secara acak, peluang terambilnya bola merah adalah...', o: ['1/2', '2/5', '3/5', '4/10'], a: 1, d: 'HOTS' },
+  ],
+};

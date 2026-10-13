@@ -1,0 +1,29 @@
+{
+  "name": "examd",
+  "version": "1.0.0",
+  "description": "ExamD - Website belajar Quiz interaktif untuk materi Kelas 10 SMA",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node seed.js"
+  },
+  "keywords": [
+    "quiz",
+    "edukasi",
+    "kelas-10",
+    "sma"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^18.0.7",
+    "express": "^4.21.0",
+    "express-session": "^1.18.0",
+    "pg": "^8.23.1"
+  }
+}
