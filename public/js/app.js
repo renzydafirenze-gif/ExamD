@@ -218,7 +218,7 @@ async function initDashboardPage() {
 
   grid.innerHTML = ALL_SUBJECTS.map((subject, idx) => {
     const isActive = available.includes(subject.name);
-    const acc = subject.accent;
+    const acc = ['#fb7185', '#fda4af', '#f87171', '#e8798e'][idx % 4];
     const base =
       'group relative flex flex-col rounded-2xl bg-white p-6 text-left ring-1 transition-all duration-300 ease-out ';
     const card = isActive

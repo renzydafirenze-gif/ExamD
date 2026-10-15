@@ -93,7 +93,7 @@ Buka http://localhost:3000 — akun demo: `demo` / `demo123`.
 ### Catatan Serverless
 
 - Tabel dibuat otomatis via `initDb()` (idempoten) saat cold-start.
-- Session memakai MemoryStore bawaan — di serverless akan ter-reset antar invocation. Untuk produksi penuh, pasang `connect-pg-simple` agar session tersimpan di PostgreSQL.
+- Session memakai `connect-pg-simple` dengan pool PostgreSQL yang sama. Tabel `user_sessions` dibuat otomatis; sesi bertahan antar invocation. Produksi wajib mengatur `SESSION_SECRET` dan memakai HTTPS. Bersihkan baris sesi kedaluwarsa lewat pekerjaan terjadwal jika diperlukan.
 - Pool `pg` dengan SSL otomatis aktif untuk host cloud (bukan localhost).
 
 ## API Endpoints

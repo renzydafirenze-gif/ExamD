@@ -35,6 +35,8 @@
     }
     .fade-up { animation: fade-up 0.5s ease-out both; }
   </style>
+  <script src="/js/theme.js"></script>
+  <link rel="stylesheet" href="/theme.css" />
 </head>
 <body class="bg-canvas font-sans text-stone-900 antialiased min-h-screen">
 
@@ -84,6 +86,24 @@
       </div>
     </section>
 
+    <section aria-labelledby="learn-heading" class="mb-10 rounded-2xl bg-white p-6 shadow-soft ring-1 ring-stone-900/5 sm:p-8">
+      <h2 id="learn-heading" class="text-xl font-bold tracking-tight">Pahami dulu, baru berlatih.</h2>
+      <p class="mt-2 text-sm text-stone-500">Tanya materi Kelas 10. Setelah dijelaskan, lanjutkan dengan tugas atau flashcard.</p>
+      <form id="learn-form" class="mt-5 space-y-3">
+        <label for="learn-topic" class="block text-sm font-medium">Apa yang ingin kamu pelajari?</label>
+        <textarea id="learn-topic" required maxlength="2000" rows="3" placeholder="Contoh: Jelaskan eksponen dan beri contoh penerapannya." class="w-full rounded-xl border border-stone-200 p-3 focus:outline-none focus:ring-2 focus:ring-teal-700"></textarea>
+        <button type="submit" class="rounded-xl bg-teal-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-teal-800 disabled:opacity-50">Tanya ExamD</button>
+      </form>
+      <p id="learn-status" role="status" class="mt-4 text-sm text-stone-600"></p>
+      <div id="learn-answer" class="mt-4 whitespace-pre-wrap text-sm leading-7"></div>
+      <div id="learn-actions" class="mt-5 hidden flex flex-wrap gap-3">
+        <button type="button" data-learn-mode="task" class="rounded-xl border border-stone-200 px-4 py-2 text-sm font-semibold transition hover:bg-teal-50 disabled:opacity-50">Buat Tugas</button>
+        <button type="button" data-learn-mode="flashcards" class="rounded-xl border border-stone-200 px-4 py-2 text-sm font-semibold transition hover:bg-teal-50 disabled:opacity-50">Buat Flashcard</button>
+      </div>
+      <div id="learn-cards" class="mt-5 grid gap-3 sm:grid-cols-2"></div>
+      <p class="mt-5 text-xs text-stone-500">Jawaban AI bisa keliru. Cocokkan dengan buku pelajaran atau guru. Jangan kirim data pribadi.</p>
+    </section>
+
     <!-- ===== Grid Mata Pelajaran ===== -->
     <section class="pb-16">
       <div class="mb-5 flex flex-wrap items-center justify-between gap-3 border-t border-stone-200/80 pt-8">
@@ -110,5 +130,6 @@
   </footer>
 
   <script src="js/app.js"></script>
+  <script src="js/learn.js"></script>
 </body>
 </html>

@@ -6,6 +6,8 @@
 // Semua query memakai placeholder $1, $2, ...
 // ============================================
 
+require('dotenv').config({ path: require('path').join(__dirname, '../../.env'), quiet: true });
+
 const { Pool } = require('pg');
 const bcrypt = require('bcryptjs');
 

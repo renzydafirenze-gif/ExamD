@@ -6,15 +6,12 @@
 
 const express = require('express');
 const session = require('express-session');
+const PgSession = require('connect-pg-simple')(session);
 const bcrypt = require('bcryptjs');
 const path = require('path');
 
-// Muat .env untuk pengembangan lokal (di Vercel tidak diperlukan)
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
-
-const { query, withTransaction, initDb } = require('./src/config/db');
+const { pool, query, withTransaction, initDb } = require('./src/config/db');
+const { generateLesson } = require('./src/gemini');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,11 +23,23 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Catatan serverless: MemoryStore bawaan express-session cukup untuk
-// tahap ini, tapi akan ter-reset antar invocation. Untuk produksi
-// disarankan connect-pg-simple (session disimpan di PostgreSQL).
+if (process.env.NODE_ENV === 'production') {
+  if (!process.env.SESSION_SECRET) {
+    throw new Error('SESSION_SECRET wajib diatur di produksi.');
+  }
+  app.set('trust proxy', 1);
+}
+
 app.use(
   session({
+    store: new PgSession({
+      pool,
+      tableName: 'user_sessions',
+      createTableIfMissing: true,
+      // ponytail: tanpa timer serverless; sesi kedaluwarsa ditolak saat dibaca.
+      // Tambahkan pembersihan terjadwal jika tabel sesi membesar.
+      pruneSessionInterval: false,
+    }),
     secret: process.env.SESSION_SECRET || 'examd-dev-secret-ganti-di-produksi',
     resave: false,
     saveUninitialized: false,
@@ -60,6 +69,19 @@ function requireAuth(req, res, next) {
 
 // Poin yang didapat per jawaban benar
 const POINTS_PER_CORRECT = 10;
+
+app.post('/api/learn', requireAuth, asyncHandler(async (req, res, next) => {
+  try {
+    const result = await generateLesson(req.body?.topic, req.body?.mode || 'explain');
+    res.json(result);
+  } catch (err) {
+    if (err.status) return res.status(err.status).json({ error: err.message });
+    if (err.name === 'TimeoutError' || err instanceof TypeError) {
+      return res.status(502).json({ error: 'Koneksi Gemini gagal atau terlalu lama. Coba lagi.' });
+    }
+    next(err);
+  }
+}));
 
 // ============================================================
 // AUTH: Register
@@ -379,7 +401,10 @@ if (require.main === module) {
       });
     })
     .catch((err) => {
-      console.error('[ExamD] Gagal inisialisasi database:', err.message);
+      console.error('[ExamD] Gagal inisialisasi database:', err.code || err.message || err.name);
+      for (const cause of err.errors || []) {
+        console.error(' ', cause.code, cause.address, cause.port);
+      }
       process.exit(1);
     });
 }

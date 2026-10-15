@@ -16,11 +16,6 @@ const path = require('path');
 
 const { query, withTransaction, initDb, pool } = require('./src/config/db');
 
-// Muat .env untuk pengembangan lokal
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
-
 // ------------------------------------------------------------
 // Muat semua file data soal dari src/data/
 // Setiap file mengekspor { subject, items: [{ q, o, a, d }] }
@@ -114,7 +109,10 @@ async function run() {
       kurang.forEach((r) => console.log(`   - ${r.subject}: ${r.jumlah} soal`));
     }
   } catch (err) {
-    console.error('[ExamD] Seed gagal:', err.message);
+    console.error('[ExamD] Seed gagal:', err.code || err.message || err.name);
+    for (const cause of err.errors || []) {
+      console.error(' ', cause.code, cause.address, cause.port);
+    }
     process.exitCode = 1;
   } finally {
     await pool.end();
