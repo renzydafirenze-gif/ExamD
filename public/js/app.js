@@ -1,6 +1,6 @@
 // ============================================================
 // ExamD - Frontend Logic (Vanilla JavaScript)
-// Halaman: login.html, dashboard.html, quiz.html (quiz di quiz.js)
+// Halaman: login.html, dashboard.html (quiz di quiz.js)
 // ============================================================
 
 'use strict';
@@ -28,7 +28,7 @@ async function api(path, options = {}) {
   try {
     data = await res.json();
   } catch {
-    // Response bukan JSON — biarkan data kosong
+    // Response bukan JSON, biarkan data kosong
   }
 
   if (!res.ok) {
@@ -44,6 +44,27 @@ function escapeHTML(str) {
   return div.innerHTML;
 }
 
+// Skor terbaik per mapel disimpan di perangkat ini saja.
+function bestKey(subject) {
+  return 'examd:best:' + subject;
+}
+
+function getBest(subject) {
+  try {
+    return Number(localStorage.getItem(bestKey(subject))) || 0;
+  } catch {
+    return 0;
+  }
+}
+
+function setBest(subject, accuracy) {
+  try {
+    if (accuracy > getBest(subject)) localStorage.setItem(bestKey(subject), String(accuracy));
+  } catch {
+    // localStorage bisa diblokir; abaikan.
+  }
+}
+
 // Tampilkan pesan di kotak alert (halaman login)
 function showAlert(message, type = 'error') {
   const box = document.getElementById('alert-box');
@@ -54,11 +75,10 @@ function showAlert(message, type = 'error') {
 
 function hideAlert() {
   const box = document.getElementById('alert-box');
-  box.hidden = true;
+  if (box) box.hidden = true;
 }
 
 // Auth guard: redirect ke login jika belum masuk.
-// Mengembalikan data user jika valid.
 async function requireLogin() {
   try {
     const data = await api('/api/user');
@@ -101,7 +121,7 @@ function initLoginPage() {
 
     const btn = document.getElementById('login-btn');
     btn.disabled = true;
-    btn.textContent = 'Memproses\u2026';
+    btn.textContent = 'Memproses…';
 
     try {
       await api('/api/login', {
@@ -128,7 +148,6 @@ function initLoginPage() {
     const password = document.getElementById('reg-password').value;
     const confirm = document.getElementById('reg-confirm').value;
 
-    // Validasi sederhana di sisi client
     if (username.length < 3 || username.length > 30) {
       return showAlert('Username harus 3-30 karakter.');
     }
@@ -141,7 +160,7 @@ function initLoginPage() {
 
     const btn = document.getElementById('register-btn');
     btn.disabled = true;
-    btn.textContent = 'Memproses\u2026';
+    btn.textContent = 'Memproses…';
 
     try {
       await api('/api/register', {
@@ -155,17 +174,33 @@ function initLoginPage() {
       btn.textContent = 'Daftar';
     }
   });
+
+  // ---- Soal contoh: boleh dicoba tanpa akun ----
+  const demoOpts = document.querySelectorAll('.demo-opt');
+  const demoFeedback = document.getElementById('demo-feedback');
+  const DEMO_CORRECT = 1; // 2^3 + 2^2 = 12
+
+  demoOpts.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const pick = Number(btn.dataset.pick);
+      demoOpts.forEach((b) => b.classList.remove('is-ok', 'is-bad'));
+      btn.classList.add(pick === DEMO_CORRECT ? 'is-ok' : 'is-bad');
+      demoFeedback.classList.toggle('is-ok', pick === DEMO_CORRECT);
+      demoFeedback.classList.toggle('is-bad', pick !== DEMO_CORRECT);
+      demoFeedback.textContent =
+        pick === DEMO_CORRECT
+          ? 'Benar. 2³ = 8, 2² = 4, jadi jawabannya 12.'
+          : 'Belum tepat. Coba pilihan lain.';
+    });
+  });
 }
 
 // ============================================================
 // HALAMAN DASHBOARD  (/dashboard.html)
 // ============================================================
 
-// Daftar mata pelajaran Kelas 10 SMA (Kurikulum Merdeka - Fase E),
-// dikelompokkan: wajib & peminatan/pilihan.
-// Ketersediaan quiz dicek lewat /api/subjects.
+// Daftar mata pelajaran Kelas 10 SMA (Kurikulum Merdeka - Fase E)
 const ALL_SUBJECTS = [
-  // ---- Kelompok Wajib ----
   { name: 'Bahasa Indonesia', desc: 'Teks, sastra, menulis kreatif', group: 'Wajib' },
   { name: 'Bahasa Inggris', desc: 'Reading, writing, conversation', group: 'Wajib' },
   { name: 'Matematika', desc: 'Eksponen, logaritma, statistik', group: 'Wajib' },
@@ -173,8 +208,6 @@ const ALL_SUBJECTS = [
   { name: 'Seni dan Budaya', desc: 'Seni rupa, musik, tari, teater', group: 'Wajib' },
   { name: 'PJOK', desc: 'Kebugaran, olahraga, kesehatan', group: 'Wajib' },
   { name: 'Informatika', desc: 'Algoritma, pemrograman, data', group: 'Wajib' },
-
-  // ---- Kelompok Peminatan / Pilihan ----
   { name: 'Fisika', desc: 'Gerak, gaya, hukum Newton', group: 'Peminatan' },
   { name: 'Kimia', desc: 'Zat, atom, ikatan kimia', group: 'Peminatan' },
   { name: 'Biologi', desc: 'Makhluk hidup, sel, ekosistem', group: 'Peminatan' },
@@ -188,10 +221,10 @@ async function initDashboardPage() {
   const user = await requireLogin();
   if (!user) return;
 
-  // Sapaan + identitas + poin
   document.getElementById('greeting-name').textContent = ', ' + user.username;
   document.getElementById('nav-user').textContent = user.username;
   document.getElementById('user-points').textContent = user.points;
+  document.getElementById('points-big').textContent = user.points;
 
   // ---- Logout ----
   document.getElementById('logout-btn').addEventListener('click', async () => {
@@ -202,9 +235,6 @@ async function initDashboardPage() {
     }
   });
 
-  // ---- Render lajurof mata pelajaran ----
-  const grid = document.getElementById('subject-grid');
-
   let available = [];
   try {
     const data = await api('/api/subjects');
@@ -213,50 +243,92 @@ async function initDashboardPage() {
     // Jika gagal, anggap semua belum tersedia
   }
 
-  const rowHTML = (subject) => {
-    const isActive = available.includes(subject.name);
-    const tagOpen = isActive ? 'a' : 'div';
-    const tagClose = isActive ? 'a' : 'div';
-    const href = isActive
-      ? ` href="/quiz.html?subject=${encodeURIComponent(subject.name)}"`
-      : '';
-    const meta = isActive
-      ? '<span class="row-meta"><span class="num">25</span><span>soal</span></span>'
-      : '<span class="row-meta">Segera</span>';
+  // ---- Mulai cepat: satu mapel acak yang tersedia ----
+  document.getElementById('quick-start').addEventListener('click', () => {
+    const pool = ALL_SUBJECTS.filter((s) => available.includes(s.name));
+    if (!pool.length) return;
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    window.location.href = '/quiz.html?subject=' + encodeURIComponent(pick.name);
+  });
 
-    return `
-      <${tagOpen}${href} class="row rise${isActive ? '' : ' is-off'}" ${isActive ? '' : 'aria-disabled="true"'}>
-        <span class="bubble" aria-hidden="true"></span>
-        <span class="row-id">
-          <span class="row-name">${escapeHTML(subject.name)}</span>
-          <span class="row-desc">${escapeHTML(subject.desc)}</span>
-        </span>
-        ${meta}
-      </${tagClose}>`;
-  };
+  // ---- Saring + cari ----
+  const grid = document.getElementById('subject-grid');
+  const search = document.getElementById('subject-search');
+  const count = document.getElementById('subject-count');
+  const filters = [...document.querySelectorAll('.filter')];
+  let group = 'all';
 
-  const groups = ['Wajib', 'Peminatan'];
-  grid.innerHTML = groups
-    .map((group) => {
-      const list = ALL_SUBJECTS.filter((s) => s.group === group);
-      return `<p class="group rise">${group}</p><div class="rows">${list.map(rowHTML).join('')}</div>`;
-    })
-    .join('');
+  function matchesQuery(subject, query) {
+    if (!query) return true;
+    const hay = (subject.name + ' ' + subject.desc).toLowerCase();
+    return hay.includes(query);
+  }
 
-  // Amati elemen hasil render JS untuk lapisan masuk
-  const rises = grid.querySelectorAll('.rise');
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
-    rises.forEach((el) => el.classList.add('is-in'));
-  } else {
+  function render() {
+    const query = search.value.trim().toLowerCase();
+    const shown = ALL_SUBJECTS.filter(
+      (s) => (group === 'all' || s.group === group) && matchesQuery(s, query)
+    );
+
+    count.innerHTML =
+      shown.length === 0
+        ? 'Tidak ada mapel yang cocok.'
+        : `<strong>${shown.length}</strong> mapel ditampilkan`;
+
+    grid.innerHTML = shown
+      .map((subject, index) => {
+        const isActive = available.includes(subject.name);
+        const best = getBest(subject.name);
+        const wide = index === 0 && shown.length > 2 ? ' is-wide' : '';
+        const tag = isActive ? 'a' : 'div';
+        const href = isActive
+          ? ` href="/quiz.html?subject=${encodeURIComponent(subject.name)}"`
+          : ' aria-disabled="true"';
+        const meta = isActive ? '25 soal' : 'Segera';
+        const bestLabel = best ? `<span class="subj-best">Terbaik ${best}%</span>` : '';
+
+        return `
+          <${tag}${href} class="subject rise${wide}${isActive ? '' : ' is-off'}" style="--d:${Math.min(index * 30, 240)}ms">
+            <span class="subj-top">
+              <span class="bubble" aria-hidden="true">${escapeHTML(subject.name[0])}</span>
+              <span class="subj-meta">${meta}</span>
+            </span>
+            <span class="subj-name">${escapeHTML(subject.name)}</span>
+            <span class="subj-desc">${escapeHTML(subject.desc)}</span>
+            <span class="subj-best-line">${bestLabel}</span>
+          </${tag}>`;
+      })
+      .join('');
+
+    reveal(grid.querySelectorAll('.rise'));
+  }
+
+  function reveal(items) {
+    if (!items.length) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+      items.forEach((el) => el.classList.add('is-in'));
+      return;
+    }
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         entry.target.classList.add('is-in');
         io.unobserve(entry.target);
       });
-    }, { threshold: 0.12 });
-    rises.forEach((el) => io.observe(el));
+    }, { threshold: 0.08 });
+    items.forEach((el) => io.observe(el));
   }
+
+  filters.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      group = btn.dataset.filter;
+      filters.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      render();
+    });
+  });
+
+  search.addEventListener('input', render);
+  render();
 }
 
 // ============================================================

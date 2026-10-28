@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="light dark" />
-  <title>ExamD — Jadwal Latihan</title>
+  <title>ExamD: Latihan</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/styles.css" />
   <script>document.documentElement.classList.add('js');</script>
@@ -18,133 +18,130 @@
 
   <nav class="topbar" aria-label="Navigasi utama">
     <div class="topbar-in">
-      <a class="wordmark" href="/dashboard.html">ExamD</a>
+      <a class="wordmark" href="/dashboard.html">Exam<span>D</span></a>
+      <div class="navlinks">
+        <a class="ghostlink" href="#mapel">Latihan</a>
+        <a class="ghostlink" href="#tanya">Tanya ExamD</a>
+      </div>
       <div class="topbar-side">
+        <span class="pointchip"><span class="num" id="user-points">0</span><span>poin</span></span>
         <span id="nav-user" class="topbar-user"></span>
         <button id="logout-btn" type="button" class="ghostlink">Keluar</button>
       </div>
     </div>
   </nav>
 
-  <main class="wrap">
+  <main class="shell">
 
-    <!-- Sapaan + angka nyata -->
-    <section class="hero">
-      <div class="cols">
-        <h1 id="greeting" class="display hero-h c1-6 rise">Selamat datang<span id="greeting-name"></span>.</h1>
-        <p class="hero-note c8-12 rise" style="--d:80ms">
-          Siapkan ujian sungguhan dengan latihan tiap hari:
-          satu sesi kecil, satu mapel, poin terkumpul tiap jawaban benar.
-        </p>
-        <div class="hero-cta c8-12 rise" style="--d:140ms">
-          <a class="btn" href="#jadwal">Mulai Latihan</a>
-          <a class="ghostlink" href="#tanya">Tanya ExamD</a>
-        </div>
-
-        <div class="facts c1-12">
-          <div class="fact rise"><p class="num" id="user-points">0</p><p class="fact-note">Poin yang sudah kamu kumpulkan</p></div>
-          <div class="fact rise" style="--d:70ms"><p class="num">350</p><p class="fact-note">Soal siap dijawab</p></div>
-          <div class="fact rise" style="--d:140ms"><p class="num">14</p><p class="fact-note">Mata pelajaran Kelas X</p></div>
-          <div class="fact rise" style="--d:210ms"><p class="num">10</p><p class="fact-note">Poin untuk tiap jawaban benar</p></div>
-        </div>
-
-        <figure class="hero-pic c8-12 rise" style="--d:120ms">
-          <img src="/assets/the-atmosphere-of-a-junior-high-school.jpg"
-               alt="Siswa Indonesia mengikuti pelajaran; layar depan kelas menampilkan peta dunia"
-               loading="lazy" />
-        </figure>
+    <header class="dash-head">
+      <div class="rise">
+        <h1 id="greeting" class="display dash-h">Halo<span id="greeting-name"></span>.</h1>
+        <p class="dash-lead">Pilih mapel, jawab 25 soal, dan lihat hasilnya per soal. Setiap jawaban benar menambah 10 poin.</p>
       </div>
-    </section>
+      <div class="points-big rise" style="--d:80ms">
+        <p class="num" id="points-big">0</p>
+        <p>poin terkumpul</p>
+      </div>
+    </header>
 
-    <!-- Tanya ExamD -->
-    <section class="learn" id="tanya" aria-labelledby="learn-heading">
-      <div class="learn-grid">
+    <section class="quick rise" style="--d:120ms" aria-labelledby="quick-h">
+      <div class="quick-copy">
         <div>
-          <h2 id="learn-heading" class="display learn-h rise">Mau dijelaskan dulu?</h2>
-          <p class="learn-sub rise" style="--d:70ms">
-            Tulis materi yang belum kamu pahami. ExamD menjelaskan, lalu mengubahnya
-            menjadi tugas atau kartu hafalan.
-          </p>
-          <form id="learn-form" class="learn-form rise" style="--d:140ms">
-            <label class="hidden-label" for="learn-topic">Materi yang ingin dipelajari</label>
-            <textarea id="learn-topic" required maxlength="2000" rows="3" placeholder="Contoh: jelaskan eksponen dengan contoh penerapannya."></textarea>
-            <button type="submit" class="btn">Tanya ExamD</button>
-          </form>
-          <p id="learn-status" class="learn-status" role="status"></p>
-          <div id="learn-answer" class="learn-answer"></div>
-          <div id="learn-actions" class="learn-actions">
-            <button type="button" data-learn-mode="task" class="btn btn--ghost">Buat Tugas</button>
-            <button type="button" data-learn-mode="flashcards" class="btn btn--ghost">Buat Flashcard</button>
-          </div>
-          <div id="learn-cards" class="flash-list"></div>
-          <p class="learn-note">
-            Jawaban AI bisa keliru. Cocokkan dengan buku pelajaran atau guru, dan jangan kirim data pribadi.
-          </p>
+          <h2 id="quick-h">Mulai sekarang, satu mapel.</h2>
+          <p>25 soal, umpan balik langsung, dan rekap skor di akhir sesi.</p>
         </div>
-        <figure class="learn-pic rise" style="--d:160ms">
-          <img src="/assets/the-atmosphere-of-a-junior-high-school-2.jpg"
-               alt="Kelas saat pelajaran: siswa mencatat, guru berdiri di depan peta dunia"
-               loading="lazy" />
-        </figure>
+        <div class="quick-actions">
+          <button id="quick-start" type="button" class="btn">Mapel acak</button>
+          <a class="linkish" href="#mapel">Pilih sendiri</a>
+        </div>
+      </div>
+
+      <div class="quick-search">
+        <label for="subject-search">Cari mata pelajaran</label>
+        <input id="subject-search" type="search" placeholder="Fisika, Kimia, Sejarah…" autocomplete="off" />
+        <div class="filters" role="group" aria-label="Saring kelompok mapel">
+          <button type="button" class="filter" data-filter="all" aria-pressed="true">Semua</button>
+          <button type="button" class="filter" data-filter="Wajib" aria-pressed="false">Wajib</button>
+          <button type="button" class="filter" data-filter="Peminatan" aria-pressed="false">Peminatan</button>
+        </div>
+        <p id="subject-count" class="searchcount"><strong>14</strong> mapel tersedia</p>
       </div>
     </section>
 
-    <!-- Arsip: ruang ujian -->
-    <figure class="bandpic rise" data-crossfade>
-      <img src="/assets/ujian-nasional-2009.jpg"
-           alt="Ruang ujian penuh: barisan siswa berseragam putih mengerjakan soal di meja kayu"
-           class="is-on" />
-      <img src="/assets/female-students-ujian-nasional-2009.jpg"
-           alt="Siswi menunduk menjawab lembar soal ujian di bawah sinar matahari"
-           loading="lazy" />
-      <figcaption>Ujian di ruang kelas, foto arsip 2009.</figcaption>
-    </figure>
+    <section id="mapel" aria-labelledby="mapel-h">
+      <div class="mapel-head rise">
+        <h2 id="mapel-h">Mata pelajaran</h2>
+        <p>25 soal per mapel · kelas X Kurikulum Merdeka</p>
+      </div>
+      <div id="subject-grid" class="subjects">
+        <!-- Ubin mapel dirender oleh js/app.js -->
+      </div>
+    </section>
 
-    <!-- Jadwal mapel -->
-    <section class="jadwal sheet" id="jadwal" aria-labelledby="jadwal-heading">
-      <div class="sheet-pad">
-        <h2 id="jadwal-heading" class="display jadwal-h rise">Mata Pelajaran</h2>
-        <p class="jadwal-sub rise" style="--d:70ms">Pilih mapel untuk mulai; lajur yang belum tersedia menyusul saat soalnya siap.</p>
+    <section class="band rise" aria-label="Suasana ujian">
+      <figure>
+        <img src="/assets/ujian-nasional-2009.jpg" alt="Barisan siswa mengerjakan ujian di ruang kelas, foto arsip 2009" loading="lazy" />
+      </figure>
+      <figure>
+        <img src="/assets/female-students-ujian-nasional-2009.jpg" alt="Siswi menunduk menjawab lembar soal ujian" loading="lazy" />
+      </figure>
+      <div class="band-copy">
+        <p class="band-line">Latihan yang terasa seperti ujian.</p>
+        <a class="btn" href="/quiz.html?subject=Matematika">Mulai Matematika</a>
+      </div>
+    </section>
 
-        <div id="subject-grid" class="rows">
-          <!-- Lajur mapel dirender oleh js/app.js -->
+    <section id="tanya" class="tutor" aria-labelledby="tutor-h">
+      <div class="tutor-copy rise">
+        <h2 id="tutor-h">Belum paham materinya?</h2>
+        <p>Tulis topiknya. ExamD menjelaskan, lalu mengubahnya jadi tugas latihan atau kartu hafalan.</p>
+        <figure class="tutor-photo">
+          <img src="/assets/the-atmosphere-of-a-junior-high-school-2.jpg" alt="Kelas saat pelajaran: siswa mencatat, guru di depan peta dunia" loading="lazy" />
+        </figure>
+      </div>
+
+      <div class="tutor-panel rise" style="--d:80ms">
+        <form id="learn-form" class="tutor-form">
+          <label class="hidden-label" for="learn-topic">Materi yang ingin dipelajari</label>
+          <textarea id="learn-topic" required maxlength="2000" rows="3" placeholder="Contoh: jelaskan hukum Newton dengan contoh sehari-hari."></textarea>
+          <button type="submit" class="btn">Tanya ExamD</button>
+        </form>
+        <p id="learn-status" class="tutor-status" role="status"></p>
+        <div id="learn-answer" class="tutor-answer"></div>
+        <div id="learn-actions" class="tutor-actions">
+          <button type="button" data-learn-mode="task" class="btn btn--ghost">Buat Tugas</button>
+          <button type="button" data-learn-mode="flashcards" class="btn btn--ghost">Buat Flashcard</button>
         </div>
-
-        <p class="jadwal-foot">Satu jadwal penuh: tiap mapel berisi 25 soal, dan tiap jawaban benar menambah 10 poin.</p>
+        <div id="learn-cards" class="flash-list"></div>
+        <p class="tutor-note">Jawaban AI bisa keliru. Cocokkan dengan buku pelajaran atau guru, dan jangan kirim data pribadi.</p>
       </div>
     </section>
 
   </main>
 
   <footer class="foot">
-    <div class="band band--20 band--paper" aria-hidden="true">
-      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-    </div>
     <div class="foot-in">
-      <div class="foot-sign">
-        <div>
-          <p class="display foot-h">Belajar lebih&nbsp;cerdas, bukan lebih&nbsp;lama.</p>
-          <p class="foot-msg">ExamD dibuat untuk siswa SMA Kelas X, Kurikulum Merdeka Fase E. Empat belas mapel, 350 soal, poin; semua untuk menyiapkan ujian yang sesungguhnya.</p>
+      <div class="foot-top">
+        <p class="foot-mark">Exam<span>D</span></p>
+        <div class="dotgrid" aria-hidden="true">
+          <i></i><i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i>
         </div>
-        <figure class="foot-stamp" aria-hidden="true">
-          <img src="/assets/female-students-ujian-nasional-2009.jpg" alt="" loading="lazy" />
+        <figure class="foot-stamp">
+          <img src="/assets/the-atmosphere-of-a-junior-high-school.jpg" alt="Siswa mengikuti pelajaran di depan peta dunia" loading="lazy" />
         </figure>
       </div>
       <div class="foot-links">
-        <a class="ghostlink" href="/dashboard.html">Beranda</a>
-        <a class="ghostlink" href="/quiz.html?subject=Matematika">Latihan Matematika</a>
-        <a class="ghostlink" href="/login.html">Masuk</a>
+        <a href="/dashboard.html">Beranda</a>
+        <a href="/quiz.html?subject=Matematika">Latihan Matematika</a>
+        <a href="/quiz.html?subject=Fisika">Latihan Fisika</a>
+        <a href="/login.html">Masuk</a>
       </div>
-      <div class="foot-imprint c1-12">
-        <p>&copy; 2026 ExamD</p>
-        <p class="credits">
-          Foto: <a href="https://commons.wikimedia.org/wiki/File:Ujian_Nasional_2009.jpg">&ldquo;Ujian Nasional 2009&rdquo;</a> &amp; <a href="https://commons.wikimedia.org/wiki/File:Female_students_Ujian_Nasional_2009.jpg">&ldquo;Siswi saat Ujian Nasional&rdquo;</a> oleh nugroho khoironi, CC&nbsp;BY-SA&nbsp;2.0; <a href="https://commons.wikimedia.org/wiki/File:The_atmosphere_of_a_junior_high_school_classroom_in_Indonesia_(2).jpg">&ldquo;Suasana kelas Indonesia&rdquo;</a> oleh Fitrah 9131, CC&nbsp;BY-SA&nbsp;4.0 &mdash; Wikimedia Commons.
-        </p>
+      <div class="foot-imprint">
+        <p>&copy; 2026 ExamD. SMA Kelas X, Kurikulum Merdeka Fase E.</p>
+        <p>Foto: <a href="https://commons.wikimedia.org/wiki/File:Ujian_Nasional_2009.jpg">Ujian Nasional 2009</a> &amp; <a href="https://commons.wikimedia.org/wiki/File:Female_students_Ujian_Nasional_2009.jpg">Siswi saat ujian</a> oleh nugroho khoironi, CC BY-SA 2.0; <a href="https://commons.wikimedia.org/wiki/File:The_atmosphere_of_a_junior_high_school_classroom_in_Indonesia_(2).jpg">Suasana kelas</a> oleh Fitrah 9131, CC BY-SA 4.0. Wikimedia Commons.</p>
       </div>
     </div>
   </footer>

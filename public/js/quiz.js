@@ -1,7 +1,7 @@
 // ============================================================
-// ExamD - Logika Halaman Quiz (/quiz.html?subject=...)
-// Satu soal per layar: lembar jawaban dengan gelembung A-D,
-// garis gelembung live, poin tiap jawaban benar, hasil akhir.
+// ExamD - Halaman Quiz (/quiz.html?subject=...)
+// Satu soal per layar. Umpan balik langsung, skor hidup di rail,
+// pintasan papan tombol, lalu rekap akhir.
 // ============================================================
 
 'use strict';
@@ -13,8 +13,7 @@
   const elLoading = document.getElementById('quiz-loading');
   const elError = document.getElementById('quiz-error');
   const elErrorMsg = document.getElementById('quiz-error-msg');
-  const elContent = document.getElementById('quiz-content');
-  const elProgressLabel = document.getElementById('progress-label');
+  const elShell = document.getElementById('quiz-content');
   const elGauge = document.getElementById('gauge');
   const elCard = document.getElementById('question-card');
   const elQuestion = document.getElementById('question-text');
@@ -24,22 +23,24 @@
   const elNextBtn = document.getElementById('next-btn');
   const elSummary = document.getElementById('summary');
   const elToast = document.getElementById('toast');
+  const elLiveCorrect = document.getElementById('live-correct');
+  const elLiveStreak = document.getElementById('live-streak');
+  const elLivePoints = document.getElementById('live-points');
 
   // ---- State ----
-  let quizzes = [];      // daftar soal dari API
-  let current = 0;       // index soal aktif
-  let selected = null;   // index opsi yang dipilih user
-  let correctCount = 0;  // jawaban benar sejauh ini
-  let sessionPoints = 0; // poin didapat sejauh ini (untuk hasil)
+  let quizzes = [];
+  let current = 0;
+  let selected = null;
+  let correctCount = 0;
+  let streak = 0;
+  let sessionPoints = 0;
   let submitting = false;
   let subject = null;
+  const results = []; // true/false per soal yang sudah dijawab
 
   const LETTERS = ['A', 'B', 'C', 'D'];
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  // ------------------------------------------------------------
-  // Notifikasi (float, durasi singkat)
-  // ------------------------------------------------------------
   function showToast(text, kind = 'ok') {
     elToast.textContent = text;
     elToast.className = 'toast ' + (kind === 'bad' ? 'is-bad' : 'is-ok') + ' is-on';
@@ -49,28 +50,49 @@
       elToast.classList.remove('is-on');
       showToast._timer = setTimeout(() => {
         elToast.className = 'toast';
-      }, 260);
+      }, 240);
     }, 1400);
   }
 
   // ------------------------------------------------------------
-  // Garis gelembung: progres 25 lingkaran
+  // Lembar jawaban: 25 gelembung
   // ------------------------------------------------------------
   function buildGauge() {
-    elGauge.innerHTML = quizzes.map(() => '<i></i>').join('');
+    elGauge.innerHTML = quizzes.map((_, i) => `<i style="animation-delay:${Math.min(i * 22, 300)}ms"></i>`).join('');
   }
 
-  function updateGauge(answered = true) {
+  function updateGauge() {
     const dots = elGauge.querySelectorAll('i');
     dots.forEach((dot, i) => {
-      dot.classList.toggle('is-done', i < current);
-      dot.classList.toggle('is-now', i === current);
+      const answered = typeof results[i] === 'boolean';
+      dot.classList.toggle('is-right', answered && results[i] === true);
+      dot.classList.toggle('is-wrong', answered && results[i] === false);
+      dot.classList.toggle('is-now', i === current && !answered);
     });
-    elProgressLabel.textContent = `Soal ${current + 1} dari ${quizzes.length}`;
+  }
+
+  function updateStats() {
+    elLiveCorrect.textContent = String(correctCount);
+    elLiveStreak.textContent = String(streak);
+    elLivePoints.textContent = String(sessionPoints);
   }
 
   // ------------------------------------------------------------
-  // Render soal aktif (masuk lembut, opsi berjeda)
+  // Pilih opsi
+  // ------------------------------------------------------------
+  function selectOption(index) {
+    if (submitting) return;
+    const btn = elOptions.querySelector(`.opt[data-answer="${index}"]`);
+    if (!btn || btn.disabled) return;
+    elOptions.querySelectorAll('.opt').forEach((b) => b.classList.remove('is-sel'));
+    btn.classList.add('is-sel');
+    selected = index;
+    elSubmitBtn.disabled = false;
+    btn.focus({ preventScroll: true });
+  }
+
+  // ------------------------------------------------------------
+  // Render soal aktif
   // ------------------------------------------------------------
   function renderQuestion() {
     const q = quizzes[current];
@@ -84,35 +106,28 @@
       current === quizzes.length - 1 ? 'Lihat Hasil' : 'Kirim Jawaban';
 
     elQuestion.textContent = q.question;
-    elQMeta.textContent =
-      `Soal ${current + 1} dari ${quizzes.length}, ${q.difficulty || 'LOTS'}`;
+    elQMeta.textContent = `Soal ${current + 1} dari ${quizzes.length} · ${q.difficulty || 'LOTS'}`;
 
     elOptions.innerHTML = q.options
-      .map((opt, i) => `
-        <button type="button" data-answer="${i}" class="opt" style="animation-delay: ${60 + i * 60}ms">
+      .map(
+        (opt, i) => `
+        <button type="button" data-answer="${i}" class="opt" style="animation-delay:${40 + i * 50}ms">
           <span class="bubble" aria-hidden="true">${LETTERS[i]}</span>
           <span class="opt-text">${escapeHTML(opt)}</span>
-        </button>`)
+        </button>`
+      )
       .join('');
 
     if (reduce.matches) {
       elOptions.querySelectorAll('.opt').forEach((btn) => (btn.style.animation = 'none'));
     }
 
-    // Interaksi pilih opsi: satu gelembung terisi per soal
     elOptions.querySelectorAll('.opt').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        if (submitting || btn.disabled) return;
-        elOptions.querySelectorAll('.opt').forEach((b) => b.classList.remove('is-sel'));
-        btn.classList.add('is-sel');
-        selected = Number(btn.dataset.answer);
-        elSubmitBtn.disabled = false;
-      });
+      btn.addEventListener('click', () => selectOption(Number(btn.dataset.answer)));
     });
 
-    // Masuk: kartu naik dari bawah
     elCard.style.opacity = '0';
-    elCard.style.transform = 'translateY(18px)';
+    elCard.style.transform = 'translateY(14px)';
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
         elCard.style.opacity = '1';
@@ -122,7 +137,7 @@
   }
 
   // ------------------------------------------------------------
-  // Submit jawaban soal aktif -> cek ke API
+  // Kirim jawaban soal aktif
   // ------------------------------------------------------------
   async function submitCurrentAnswer() {
     if (selected === null || submitting) return;
@@ -130,44 +145,44 @@
     elSubmitBtn.disabled = true;
 
     const q = quizzes[current];
-
-    // Nonaktifkan semua opsi agar tidak bisa diubah
-    elOptions.querySelectorAll('.opt').forEach((b) => {
-      b.disabled = true;
-    });
+    elOptions.querySelectorAll('.opt').forEach((b) => (b.disabled = true));
 
     try {
-      // Kirim jawaban 1 soal; server mengembalikan correctness
       const data = await api('/api/submit-quiz', {
         method: 'POST',
         body: {
-          subject: subject,
+          subject,
           answers: [{ id: q.id, answer: selected }],
         },
       });
 
       const result = data.results.find((r) => r && r.id === q.id) || data.results[0];
       const isCorrect = Boolean(result && result.valid && result.correct);
+      results[current] = isCorrect;
 
       const elSelected = elOptions.querySelector(`.opt[data-answer="${selected}"]`);
+      elOptions.querySelectorAll('.opt').forEach((b) => {
+        if (b !== elSelected) b.classList.add('is-dim');
+      });
+
       if (isCorrect) {
         correctCount++;
+        streak++;
         sessionPoints += data.pointsPerCorrect;
-        showToast('Benar, +' + data.pointsPerCorrect + ' poin.', 'ok');
         elSelected.classList.add('is-ok');
+        showToast(`Benar, +${data.pointsPerCorrect} poin. Tepat ${streak} kali berturut.`, 'ok');
       } else {
-        showToast('Belum tepat.', 'bad');
+        streak = 0;
         elSelected.classList.add('is-bad');
+        showToast('Belum tepat. Cek lagi materinya.', 'bad');
         elCard.classList.remove('shake');
-        void elCard.offsetWidth; // restart animasi getar
+        void elCard.offsetWidth;
         elCard.classList.add('shake');
       }
 
-      // Gelembung soal ini dianggap terisi
-      const dots = elGauge.querySelectorAll('i');
-      if (dots[current]) dots[current].classList.add('is-done');
+      updateGauge();
+      updateStats();
 
-      // Sambungkan ke soal berikutnya atau tampilkan hasil
       elSubmitBtn.hidden = true;
       if (current < quizzes.length - 1) {
         elNextBtn.hidden = false;
@@ -179,16 +194,22 @@
       showToast(err.message, 'bad');
       elSubmitBtn.disabled = false;
       elOptions.querySelectorAll('.opt').forEach((b) => (b.disabled = false));
+      results[current] = undefined;
     } finally {
       submitting = false;
     }
+  }
+
+  function goNext() {
+    if (current >= quizzes.length - 1) return;
+    current++;
+    renderQuestion();
   }
 
   // ------------------------------------------------------------
   // Layar hasil
   // ------------------------------------------------------------
   async function showSummary() {
-    // Ambil data user terbaru (total poin dari server)
     let totalPoints = sessionPoints;
     try {
       const data = await api('/api/user');
@@ -198,51 +219,30 @@
       // Abaikan: pakai poin sesi saja
     }
 
-    elContent.hidden = true;
+    elShell.hidden = true;
     elSummary.hidden = false;
-
-    // Reveal + mulai crossfade galeri hasil
-    document.querySelectorAll('#summary .rise, #summary .pop').forEach((el) => el.classList.add('is-in'));
-    const gallery = document.querySelector('#summary [data-crossfade]');
-    if (gallery && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      const frames = gallery.querySelectorAll('img');
-      let gi = 0;
-      if (gallery._fade) clearInterval(gallery._fade);
-      gallery._fade = setInterval(() => {
-        if (document.hidden) return;
-        gi = (gi + 1) % frames.length;
-        frames.forEach((f, k) => f.classList.toggle('is-on', k === gi));
-      }, 5600);
-    }
 
     const total = quizzes.length;
     const wrong = total - correctCount;
     const accuracy = Math.round((correctCount / total) * 100);
     const perfect = correctCount === total;
 
+    setBest(subject, accuracy);
+
     document.getElementById('sum-title').textContent = perfect
-      ? 'Sempurna, semua benar.'
-      : correctCount > 0
+      ? 'Semua benar.'
+      : correctCount >= total / 2
         ? 'Kerja bagus.'
         : 'Jangan menyerah.';
-    document.getElementById('sum-sub').textContent =
-      `Quiz ${subject}, ${total} soal selesai.`;
-    document.getElementById('sum-title').classList.add('pop', 'is-in');
-    document.getElementById('sum-sub').classList.add('pop', 'is-in');
+    document.getElementById('sum-sub').textContent = `${subject}, ${total} soal selesai.`;
 
     document.getElementById('ledger-wrong').textContent = String(wrong);
-    document.getElementById('ledger-points').textContent = '+' + sessionPoints;
     document.getElementById('ledger-total').textContent = String(totalPoints);
 
-    // Reveal: angka berjalan naik + ring akurasi menyapu
-    countUp(document.getElementById('sum-score'), correctCount, 1000,
-      (v) => v + '/' + total);
-    countUp(document.getElementById('sum-accuracy'), accuracy, 1100,
-      (v) => v + '%');
-    countUp(document.getElementById('ledger-points'), sessionPoints, 1000,
-      (v) => '+' + v);
+    countUp(document.getElementById('sum-score'), correctCount, 900, (v) => v + '/' + total);
+    countUp(document.getElementById('sum-accuracy'), accuracy, 1000, (v) => v + '%');
+    countUp(document.getElementById('ledger-points'), sessionPoints, 900, (v) => '+' + v);
 
-    // Ring akurasi: penuhi sesuai persentase (dasharray = 263.9 untuk r=42)
     const ring = document.getElementById('acc-ring');
     ring.style.strokeDashoffset = '263.9';
     requestAnimationFrame(() =>
@@ -250,9 +250,10 @@
         ring.style.strokeDashoffset = String(263.9 * (1 - accuracy / 100));
       })
     );
+
+    document.getElementById('retry-btn').addEventListener('click', () => window.location.reload());
   }
 
-  // Angka berjalan naik dengan easing cubic-out
   function countUp(el, target, duration, format) {
     if (reduce.matches) {
       el.textContent = format(target);
@@ -269,19 +270,47 @@
   }
 
   // ------------------------------------------------------------
+  // Pintasan papan tombol
+  // ------------------------------------------------------------
+  document.addEventListener('keydown', (event) => {
+    if (elSummary.hidden === false) return;
+    const tag = (event.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+
+    if (/^[1-4]$/.test(event.key)) {
+      event.preventDefault();
+      selectOption(Number(event.key) - 1);
+      return;
+    }
+
+    const letter = LETTERS.indexOf(event.key.toUpperCase());
+    if (letter !== -1 && event.key.length === 1) {
+      event.preventDefault();
+      selectOption(letter);
+      return;
+    }
+
+    if (event.key === 'Enter') {
+      if (event.target === elSubmitBtn || event.target === elNextBtn) return; // kontrol menangani sendiri
+      event.preventDefault();
+      if (!elNextBtn.hidden) goNext();
+      else if (!elSubmitBtn.hidden && !elSubmitBtn.disabled) submitCurrentAnswer();
+    }
+  });
+
+  // ------------------------------------------------------------
   // Init
   // ------------------------------------------------------------
   async function init() {
-    const user = await requireLogin(); // dari app.js
+    const user = await requireLogin();
     if (!user) return;
     document.getElementById('nav-points').textContent = user.points;
 
     subject = new URLSearchParams(window.location.search).get('subject');
 
     if (!subject) {
-      elTitle.textContent = 'Quiz';
       elLoading.hidden = true;
-      elContent.hidden = true;
+      elShell.hidden = true;
       elErrorMsg.textContent = 'Mata pelajaran tidak ditentukan.';
       elError.hidden = false;
       return;
@@ -291,25 +320,22 @@
       const data = await api('/api/quizzes/' + encodeURIComponent(subject));
       quizzes = data.quizzes;
     } catch (err) {
-      elTitle.textContent = 'Quiz ' + subject;
       elLoading.hidden = true;
-      elContent.hidden = true;
+      elShell.hidden = true;
       elErrorMsg.textContent = err.message;
       elError.hidden = false;
       return;
     }
 
-    elTitle.textContent = 'Quiz ' + subject;
-    elSubtitle.textContent = `${quizzes.length} soal, +10 poin tiap jawaban benar`;
+    elTitle.textContent = subject;
+    elSubtitle.textContent = `Latihan · ${quizzes.length} soal · +10 poin tiap jawaban benar`;
     elLoading.hidden = true;
-    elContent.hidden = false;
+    elShell.hidden = false;
 
     buildGauge();
+    updateStats();
     elSubmitBtn.addEventListener('click', submitCurrentAnswer);
-    elNextBtn.addEventListener('click', () => {
-      current++;
-      renderQuestion();
-    });
+    elNextBtn.addEventListener('click', goNext);
 
     renderQuestion();
   }

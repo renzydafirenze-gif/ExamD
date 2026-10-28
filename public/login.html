@@ -4,88 +4,104 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="light dark" />
-  <title>ExamD — Masuk &amp; Daftar</title>
+  <title>ExamD: Masuk &amp; Daftar</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/styles.css" />
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
-  <main class="login-grid">
+  <main class="auth">
 
-    <!-- Ruang ujian: foto arsip dari sekolah Indonesia -->
-    <aside class="login-pane" data-crossfade aria-label=" suasana ujian dan belajar di sekolah Indonesia">
-      <img src="/assets/ujian-nasional-2009.jpg" alt="Ruang kelas penuh saat ujian: siswa berseragam putih menulis di meja kayu" class="is-on" fetchpriority="high" />
-      <img src="/assets/the-atmosphere-of-a-junior-high-school.jpg" alt="Siswa mengikuti pelajaran di depan layar peta dunia" loading="lazy" />
-      <img src="/assets/female-students-ujian-nasional-2009.jpg" alt="Siswi menunduk menjawab lembar soal ujian di bawah sinar matahari" loading="lazy" />
-      <img src="/assets/the-atmosphere-of-a-junior-high-school-2.jpg" alt="Sisi lain kelas saat pelajaran, layar menampilkan materi peta dunia" loading="lazy" />
-    </aside>
-
-    <!-- Lembar kartu ujian -->
-    <section class="login-card sheet" aria-labelledby="login-h">
-      <div class="band band--20 pop" aria-hidden="true">
-        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    <!-- Bidang biru + foto dalam satu bulatan besar -->
+    <section class="auth-visual" aria-labelledby="auth-claim">
+      <div class="auth-brandline rise">
+        <a class="wordmark" href="/login.html">Exam<span>D</span></a>
       </div>
 
-      <div class="login-body">
-        <p class="login-mark display pop" id="login-h">ExamD</p>
+      <div class="auth-mid">
+        <h2 id="auth-claim" class="rise">350 soal, 14 mapel.</h2>
+        <p class="rise" style="--d:70ms">Satu kebiasaan untuk siswa SMA Kelas X: jawab per soal, lihat hasilnya langsung, kumpulkan poin tiap jawaban benar.</p>
+      </div>
 
-        <h1 class="display login-h rise">Ujian dimulai di&nbsp;sini.</h1>
-        <p class="login-sub rise" style="--d:80ms">
-          Latihan ujian untuk siswa SMA Kelas X: jawab soal per mata pelajaran,
-          dapat poin tiap jawaban benar, dan pantau perkembanganmu.
-        </p>
+      <div class="auth-photo pop" data-crossfade>
+        <img src="/assets/ujian-nasional-2009.jpg" alt="Ruang kelas saat ujian: siswa berseragam putih menulis di meja kayu" class="is-on" fetchpriority="high" />
+        <img src="/assets/the-atmosphere-of-a-junior-high-school.jpg" alt="Siswa mengikuti pelajaran di depan layar peta dunia" loading="lazy" />
+        <img src="/assets/female-students-ujian-nasional-2009.jpg" alt="Siswi menunduk menjawab lembar soal ujian" loading="lazy" />
+        <img src="/assets/the-atmosphere-of-a-junior-high-school-2.jpg" alt="Suasana kelas saat pelajaran berlangsung" loading="lazy" />
+      </div>
 
-        <div class="tabs" role="tablist" aria-label="Pilih aksi">
-          <button type="button" id="tab-login" class="tab rise" style="--d:140ms" aria-pressed="true">Masuk</button>
-          <button type="button" id="tab-register" class="tab rise" style="--d:190ms" aria-pressed="false">Daftar</button>
+      <div class="auth-stats">
+        <div class="auth-stat rise"><span class="bubble" aria-hidden="true">A</span><p><strong>25 soal</strong>per mapel</p></div>
+        <div class="auth-stat rise"><span class="bubble" aria-hidden="true">B</span><p><strong>10 poin</strong>tiap jawaban benar</p></div>
+        <div class="auth-stat rise"><span class="bubble" aria-hidden="true">C</span><p><strong>Langsung</strong>benar atau salah</p></div>
+      </div>
+    </section>
+
+    <!-- Form -->
+    <section class="auth-form" aria-labelledby="login-h">
+      <h1 id="login-h" class="display auth-h rise">Masuk. Soal menunggu.</h1>
+      <p class="auth-lead rise" style="--d:60ms">Belum punya akun? Pilih Daftar; cukup username dan password.</p>
+
+      <div class="tabs rise" style="--d:110ms" role="tablist" aria-label="Pilih aksi">
+        <button type="button" id="tab-login" class="tab" aria-pressed="true">Masuk</button>
+        <button type="button" id="tab-register" class="tab" aria-pressed="false">Daftar</button>
+      </div>
+
+      <div id="alert-box" class="alert is-error" role="alert" hidden></div>
+
+      <form id="form-login" class="login-form rise" style="--d:150ms">
+        <div class="field rise" style="--d:30ms">
+          <label for="login-username">Username</label>
+          <input id="login-username" type="text" required autocomplete="username" placeholder="username kamu" />
         </div>
-        <div id="alert-box" class="alert is-error" role="alert" hidden></div>
+        <div class="field rise" style="--d:60ms">
+          <label for="login-password">Password</label>
+          <input id="login-password" type="password" required autocomplete="current-password" placeholder="password kamu" />
+        </div>
+        <button type="submit" id="login-btn" class="btn">Masuk</button>
+      </form>
 
-        <form id="form-login" class="login-form">
-          <div class="field rise" style="--d:200ms">
-            <label for="login-username">Username</label>
-            <input id="login-username" type="text" required autocomplete="username" placeholder="username kamu" />
-          </div>
-          <div class="field rise" style="--d:260ms">
-            <label for="login-password">Password</label>
-            <input id="login-password" type="password" required autocomplete="current-password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />
-          </div>
-          <button type="submit" id="login-btn" class="btn rise" style="--d:320ms">Masuk</button>
-        </form>
+      <form id="form-register" class="login-form rise" style="--d:150ms" hidden>
+        <div class="field rise" style="--d:30ms">
+          <label for="reg-username">Username</label>
+          <input id="reg-username" type="text" required autocomplete="username" placeholder="3–30 karakter" />
+        </div>
+        <div class="field rise" style="--d:60ms">
+          <label for="reg-password">Password</label>
+          <input id="reg-password" type="password" required autocomplete="new-password" placeholder="minimal 6 karakter" />
+        </div>
+        <div class="field rise" style="--d:90ms">
+          <label for="reg-confirm">Konfirmasi password</label>
+          <input id="reg-confirm" type="password" required autocomplete="new-password" placeholder="ulangi password" />
+        </div>
+        <button type="submit" id="register-btn" class="btn">Daftar</button>
+      </form>
 
-        <form id="form-register" class="login-form" hidden>
-          <div class="field rise" style="--d:200ms">
-            <label for="reg-username">Username</label>
-            <input id="reg-username" type="text" required autocomplete="username" placeholder="3&ndash;30 karakter" />
-          </div>
-          <div class="field rise" style="--d:260ms">
-            <label for="reg-password">Password</label>
-            <input id="reg-password" type="password" required autocomplete="new-password" placeholder="minimal 6 karakter" />
-          </div>
-          <div class="field rise" style="--d:320ms">
-            <label for="reg-confirm">Konfirmasi password</label>
-            <input id="reg-confirm" type="password" required autocomplete="new-password" placeholder="ulangi password" />
-          </div>
-          <button type="submit" id="register-btn" class="btn rise" style="--d:380ms">Daftar</button>
-        </form>
-      </div>
+      <!-- Satu soal nyata untuk dicoba tanpa akun -->
+      <section class="demo rise" style="--d:200ms" aria-labelledby="demo-h">
+        <h2 id="demo-h">Coba satu soal</h2>
+        <p class="demo-q">Nilai dari 2³ + 2² adalah…</p>
+        <div class="demo-opts" role="group" aria-label="Pilihan jawaban">
+          <button type="button" class="demo-opt" data-pick="0"><span class="bubble" aria-hidden="true">A</span>10</button>
+          <button type="button" class="demo-opt" data-pick="1"><span class="bubble" aria-hidden="true">B</span>12</button>
+          <button type="button" class="demo-opt" data-pick="2"><span class="bubble" aria-hidden="true">C</span>16</button>
+          <button type="button" class="demo-opt" data-pick="3"><span class="bubble" aria-hidden="true">D</span>32</button>
+        </div>
+        <p id="demo-feedback" class="demo-feedback" role="status"></p>
+      </section>
 
-      <div class="login-foot tear">
-        <p class="rise" style="--d:320ms">Akun coba: <strong>demo</strong> / <strong>demo123</strong></p>
-        <p class="credits rise" style="--d:360ms">
-          Foto: <a href="https://commons.wikimedia.org/wiki/File:Ujian_Nasional_2009.jpg">&ldquo;Ujian Nasional 2009&rdquo;</a> (nugroho khoironi, CC&nbsp;BY-SA&nbsp;2.0)
-          &amp; <a href="https://commons.wikimedia.org/wiki/File:The_atmosphere_of_a_junior_high_school_classroom_in_Indonesia.jpg">&ldquo;Suasana kelas&rdquo;</a> (Fitrah 9131, CC&nbsp;BY&nbsp;3.0), Wikimedia&nbsp;Commons.
-        </p>
-      </div>
+      <p class="credits rise" style="--d:240ms">
+        Foto: <a href="https://commons.wikimedia.org/wiki/File:Ujian_Nasional_2009.jpg">Ujian Nasional 2009</a>
+        (nugroho khoironi, CC BY-SA 2.0); <a href="https://commons.wikimedia.org/wiki/File:The_atmosphere_of_a_junior_high_school_classroom_in_Indonesia.jpg">Suasana kelas</a>
+        (Fitrah 9131, CC BY 3.0); <a href="https://commons.wikimedia.org/wiki/File:Female_students_Ujian_Nasional_2009.jpg">Siswi saat ujian</a>
+        (nugroho khoironi, CC BY-SA 2.0). Wikimedia Commons.
+      </p>
     </section>
 
   </main>

@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="light dark" />
-  <title>ExamD — Quiz</title>
+  <title>ExamD: Latihan Soal</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/styles.css" />
   <script>document.documentElement.classList.add('js');</script>
@@ -18,48 +18,34 @@
 
   <nav class="topbar" aria-label="Navigasi utama">
     <div class="topbar-in">
-      <a class="wordmark" href="/dashboard.html">ExamD</a>
-      <div class="topbar-side">
+      <a class="wordmark" href="/dashboard.html">Exam<span>D</span></a>
+      <div class="navlinks">
         <a class="ghostlink" href="/dashboard.html">&larr; Dashboard</a>
-        <span class="topbar-points"><span class="num" id="nav-points">0</span><span>Poin</span></span>
+      </div>
+      <div class="topbar-side">
+        <span class="pointchip"><span class="num" id="nav-points">0</span><span>poin</span></span>
       </div>
     </div>
   </nav>
 
-  <main class="quiz-wrap">
+  <main>
+    <div id="quiz-loading" class="loading">Memuat soal…</div>
 
-    <!-- Memuat -->
-    <div id="quiz-loading" class="loading">Memuat soal&hellip;</div>
-    <!-- Gagal memuat -->
-    <div id="quiz-error" class="sheet state" hidden>
-      <h1 class="display state-h">Sesinya gagal dibuka.</h1>
+    <div id="quiz-error" class="state shell" hidden>
+      <h1 class="display state-h">Sesi gagal dibuka.</h1>
       <p id="quiz-error-msg" class="state-p"></p>
-      <a href="/dashboard.html" class="btn btn--ink">Kembali ke Dashboard</a>
+      <a href="/dashboard.html" class="btn">Kembali ke Dashboard</a>
     </div>
 
-    <!-- Lembar jawaban -->
-    <div id="quiz-content">
-      <header class="sheet-head">
-        <h1 id="quiz-title" class="display quiz-h rise">Quiz &hellip;</h1>
-        <p id="quiz-subtitle" class="quiz-meta rise" style="--d:70ms"></p>
-      </header>
+    <div id="quiz-content" class="quiz-shell">
+      <div class="quiz-main">
+        <header class="quiz-head rise">
+          <h1 id="quiz-title" class="display quiz-h">Quiz</h1>
+          <p id="quiz-subtitle" class="quiz-meta"></p>
+        </header>
 
-      <!-- Ruang ujian: foto arsip -->
-      <figure class="quizpic rise" style="--d:140ms">
-        <img src="/assets/ujian-nasional-2009.jpg"
-             alt="Barisan siswa mengerjakan ujian di ruang kelas, foto arsip 2009" />
-        <figcaption>Sesi latihan ini serius seperti ujian sebenarnya; foto arsip ruang ujian, 2009.</figcaption>
-      </figure>
-
-      <!-- The real thing: garis gelembung live -->
-      <div class="gauge-line rise" style="--d:200ms">
-        <p class="gauge-txt" id="progress-label">Soal 1 dari 25</p>
-        <div id="gauge" class="gauge" aria-hidden="true"></div>
-      </div>
-
-      <section id="question-card" class="sheet pop" style="--d:260ms" aria-live="polite">
-        <div class="sheet-pad" style="padding-top:28px;padding-bottom:28px">
-          <p class="qmeta" id="question-num"></p>
+        <section id="question-card" class="qcard rise" style="--d:60ms" aria-live="polite">
+          <p id="question-num" class="qmeta"></p>
           <p id="question-text" class="qtext"></p>
           <div id="options" class="options"></div>
 
@@ -67,50 +53,71 @@
             <button id="submit-btn" type="button" class="btn" disabled>Kirim Jawaban</button>
             <button id="next-btn" type="button" class="btn btn--ink" hidden>Lanjut</button>
           </div>
+          <p class="keyhint">Pintasan: <kbd>1</kbd>–<kbd>4</kbd> memilih, <kbd>Enter</kbd> mengirim atau lanjut.</p>
+        </section>
+
+        <figure class="qstrip rise" style="--d:80ms">
+          <img src="/assets/female-students-ujian-nasional-2009.jpg" alt="Siswi menunduk menjawab lembar soal ujian" loading="lazy" />
+          <img src="/assets/the-atmosphere-of-a-junior-high-school.jpg" alt="Siswa mengikuti pelajaran di depan peta dunia" loading="lazy" />
+          <img src="/assets/the-atmosphere-of-a-junior-high-school-2.jpg" alt="Suasana kelas saat pelajaran berlangsung" loading="lazy" />
+          <figcaption>Arsip ruang ujian, 2009. Satu soal per layar, seperti lembar jawaban sungguhan.</figcaption>
+        </figure>
+      </div>
+
+      <aside class="qrail rise" style="--d:100ms" aria-label="Lembar jawaban dan skor">
+        <div class="rail-block">
+          <p class="rail-title">Lembar jawaban</p>
+          <div id="gauge" class="gauge" aria-hidden="true"></div>
         </div>
-      </section>
+        <div class="rail-stats rise" style="--d:60ms">
+          <div class="rail-stat"><span class="num" id="live-correct">0</span><span>benar</span></div>
+          <div class="rail-stat"><span class="num" id="live-streak">0</span><span>berturut</span></div>
+          <div class="rail-stat"><span class="num" id="live-points">0</span><span>poin sesi</span></div>
+        </div>
+        <figure class="rail-photo rise" style="--d:100ms">
+          <img src="/assets/ujian-nasional-2009.jpg" alt="Barisan siswa mengerjakan ujian di ruang kelas, foto arsip 2009" loading="lazy" />
+        </figure>
+      </aside>
     </div>
 
-    <!-- Hasil -->
-    <section id="summary" class="sheet state" hidden aria-live="polite">
-      <h2 id="sum-title" class="display sum-h"></h2>
-      <p id="sum-sub" class="sum-sub"></p>
+    <section id="summary" class="summary" hidden aria-live="polite">
+      <div class="summary-card">
+        <h2 id="sum-title" class="display summary-h"></h2>
+        <p id="sum-sub" class="sum-sub"></p>
 
-      <div class="sum-big">
-        <div>
-          <p class="num sum-score" id="sum-score">0/0</p>
-          <p class="sum-caption">Jawaban benar</p>
+        <div class="sum-big">
+          <div>
+            <p class="num sum-score" id="sum-score">0/0</p>
+            <p class="sum-caption">Jawaban benar</p>
+          </div>
+          <div class="sum-ring">
+            <svg viewBox="0 0 100 100" role="img" aria-label="Ring akurasi jawaban benar">
+              <circle class="track" cx="50" cy="50" r="42" />
+              <circle id="acc-ring" class="meter" cx="50" cy="50" r="42" stroke-dasharray="263.9" stroke-dashoffset="263.9"
+                style="transition: stroke-dashoffset 1.1s cubic-bezier(0.22, 1, 0.36, 1)" />
+            </svg>
+            <span class="pct num" id="sum-accuracy">0%</span>
+          </div>
         </div>
-        <div class="sum-ring">
-          <svg viewBox="0 0 100 100" role="img" aria-label="Ring akurasi jawaban benar">
-            <circle class="track" cx="50" cy="50" r="42" />
-            <circle id="acc-ring" class="meter" cx="50" cy="50" r="42" stroke-dasharray="263.9" stroke-dashoffset="263.9"
-              style="transition: stroke-dashoffset 1.2s cubic-bezier(0.22, 1, 0.36, 1)" />
-          </svg>
-          <span class="pct num" id="sum-accuracy">0%</span>
+
+        <dl class="ledger">
+          <div><dt>Salah</dt><dd class="num" id="ledger-wrong">0</dd></div>
+          <div><dt>Poin sesi ini</dt><dd class="num" id="ledger-points">+0</dd></div>
+          <div><dt>Total poin kamu</dt><dd class="num" id="ledger-total">0</dd></div>
+        </dl>
+
+        <div class="sum-cta">
+          <button id="retry-btn" type="button" class="btn">Ulangi sesi</button>
+          <a href="/dashboard.html" class="btn btn--ink">Ganti mapel</a>
         </div>
       </div>
 
-      <!-- Ruang tempat hasil bekerja -->
-      <dl class="ledger">
-        <div><dt>Salah</dt><dd class="num" id="ledger-wrong">0</dd></div>
-        <div><dt>Poin sesi ini</dt><dd class="num" id="ledger-points">+0</dd></div>
-        <div><dt>Total poin kamu</dt><dd class="num" id="ledger-total">0</dd></div>
-      </dl>
-
-      <div class="sum-cta">
-        <a href="/dashboard.html" class="btn btn--ink">Kembali ke Dashboard</a>
+      <div class="summary-photos" aria-hidden="true">
+        <img src="/assets/female-students-ujian-nasional-2009.jpg" alt="" loading="lazy" />
+        <img src="/assets/the-atmosphere-of-a-junior-high-school-2.jpg" alt="" loading="lazy" />
+        <img src="/assets/the-atmosphere-of-a-junior-high-school.jpg" alt="" loading="lazy" />
       </div>
     </section>
-
-    <!-- Galeri arsip: selalu tampil di bawah lembar -->
-    <figure class="sum-gallery" data-crossfade aria-label="Suasana ruang ujian">
-      <img src="/assets/ujian-nasional-2009.jpg" alt="Ruang ujian penuh siswa, foto arsip 2009" class="is-on" />
-      <img src="/assets/female-students-ujian-nasional-2009.jpg" alt="Siswi fokus menjawab lembar soal" />
-      <img src="/assets/the-atmosphere-of-a-junior-high-school-2.jpg" alt="Kelas saat pelajaran berlangsung" />
-      <figcaption>Foto arsip ruang kelas dan ujian; latihan di halaman ini meniru cara kerja ujian sungguhan.</figcaption>
-    </figure>
-
   </main>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
