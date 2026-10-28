@@ -13,7 +13,6 @@ Website belajar **Quiz interaktif** untuk materi **Kelas 10 SMA** (Kurikulum Mer
 ```
 ExamD/
 ├── server.js            # Entry point Express + REST API (juga export untuk Vercel)
-├── api/[...path].js     # Fungsi serverless Vercel: teruskan /api/* ke server.js
 ├── seed.js              # Seed 350 soal dari src/data/ ke PostgreSQL
 ├── vercel.json          # Deploy Vercel: region, cache header (static via CDN)
 ├── package.json
@@ -87,7 +86,7 @@ Buka http://localhost:3000 — akun demo: `demo` / `demo123`.
    | `SESSION_SECRET` | string acak panjang (`openssl rand -base64 32`) |
    | `NODE_ENV` | `production` |
 
-4. **Deploy** — `vercel.json` menyajikan `public/` langsung dari CDN Vercel; hanya `/api/*` yang masuk ke fungsi (`api/[...path].js` → `server.js`).
+4. **Deploy** — Vercel mendeteksi `server.js` sebagai app Express (single function) lewat `"framework": "express"`. `public/` disajikan langsung dari CDN Vercel; sisanya (termasuk `/api/*`) masuk ke fungsi Express.
 
 5. **Seed database** sekali dari komputer lokal (arahkan ke DB cloud):
    ```bash
