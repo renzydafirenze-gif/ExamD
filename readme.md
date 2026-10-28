@@ -13,8 +13,9 @@ Website belajar **Quiz interaktif** untuk materi **Kelas 10 SMA** (Kurikulum Mer
 ```
 ExamD/
 ├── server.js            # Entry point Express + REST API (juga export untuk Vercel)
+├── api/[...path].js     # Fungsi serverless Vercel: teruskan /api/* ke server.js
 ├── seed.js              # Seed 350 soal dari src/data/ ke PostgreSQL
-├── vercel.json          # Konfigurasi deploy Vercel
+├── vercel.json          # Deploy Vercel: region, cache header (static via CDN)
 ├── package.json
 ├── .env.example         # Contoh environment variables
 ├── src/
@@ -86,17 +87,21 @@ Buka http://localhost:3000 — akun demo: `demo` / `demo123`.
    | `SESSION_SECRET` | string acak panjang (`openssl rand -base64 32`) |
    | `NODE_ENV` | `production` |
 
-4. **Deploy** — `vercel.json` sudah mengarahkan semua request ke `server.js`.
+4. **Deploy** — `vercel.json` menyajikan `public/` langsung dari CDN Vercel; hanya `/api/*` yang masuk ke fungsi (`api/[...path].js` → `server.js`).
 
 5. **Seed database** sekali dari komputer lokal (arahkan ke DB cloud):
    ```bash
    DATABASE_URL="postgresql://...neon.tech/examd?sslmode=require" npm run seed
    ```
+   Alternatif: set env `DB_AUTOINIT=1` agar fungsi membuat tabel + seed sendiri saat request pertama, lalu hapus lagi setelah deploy sukses (lebih lambat, hanya untuk sekali jalan).
 
 ### Catatan Serverless
 
-- Tabel dibuat otomatis via `initDb()` (idempoten) saat cold-start.
-- Session memakai `connect-pg-simple` dengan pool PostgreSQL yang sama. Tabel `user_sessions` dibuat otomatis; sesi bertahan antar invocation. Produksi wajib mengatur `SESSION_SECRET` dan memakai HTTPS. Bersihkan baris sesi kedaluwarsa lewat pekerjaan terjadwal jika diperlukan.
+- Static (HTML/CSS/JS/gambar) disajikan Vercel, bukan fungsi; cache diatur di `vercel.json`.
+- `initDb()` **tidak** jalan di produksi kecuali `DB_AUTOINIT=1` — supaya cold start ringan.
+- `regions: ["sin1"]` (Singapura) di `vercel.json`. Ganti ke region terdekat dengan **database** kalau latensi DB masih tinggi.
+- Pakai connection string **pooled** (`...-pooler.neon.tech`) agar tiap invocation tak membuka koneksi TCP/TLS baru.
+- Session memakai `connect-pg-simple`; tabel `user_sessions` dibuat otomatis. Produksi wajib `SESSION_SECRET` + HTTPS.
 - Pool `pg` dengan SSL otomatis aktif untuk host cloud (bukan localhost).
 
 ## API Endpoints

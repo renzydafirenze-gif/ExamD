@@ -24,11 +24,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serverless tidak menjalankan cabang app.listen; siapkan DB sebelum API dipakai.
-let databaseReady;
+// Migrasi/seed berat hanya dijalankan bila DB_AUTOINIT=1 (dev lokal / deploy pertama).
+// Di Vercel biarkan mati: cukup jalankan `npm run seed` sekali dari lokal.
+const DB_AUTOINIT = process.env.DB_AUTOINIT === '1';
+let databaseReady = DB_AUTOINIT ? null : Promise.resolve();
 app.use('/api', (req, res, next) => {
   if (!databaseReady) {
     databaseReady = initDb().catch(error => {
-      databaseReady = undefined;
+      databaseReady = null;
       throw error;
     });
   }
@@ -405,8 +408,9 @@ app.use((err, req, res, next) => {
 // ============================================================
 
 if (require.main === module) {
-  // Jalankan migrasi & seed ringan lalu start server (mode lokal)
-  initDb()
+  // Mode lokal: jalankan migrasi & seed ringan, lalu start server.
+  databaseReady = initDb();
+  databaseReady
     .then(() => {
       app.listen(PORT, () => {
         console.log(`ExamD API berjalan di http://localhost:${PORT}`);
