@@ -3,217 +3,120 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ExamD - Quiz</title>
+  <meta name="color-scheme" content="light dark" />
+  <title>ExamD — Quiz</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
-  <!-- Tipografi: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"Inter"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-          },
-          colors: { canvas: '#FAFAF8' },
-          boxShadow: {
-            soft: '0 1px 2px rgb(16 24 40 / 0.04), 0 1px 3px rgb(16 24 40 / 0.06)',
-            lift: '0 20px 40px -12px rgb(16 24 40 / 0.18), 0 8px 16px -8px rgb(16 24 40 / 0.06)',
-          },
-        },
-      },
-    };
-  </script>
-
-  <style>
-    /* Toast notifikasi benar/salah */
-    @keyframes toast-pop {
-      from { transform: translateY(-16px) scale(0.95); opacity: 0; }
-      to   { transform: translateY(0) scale(1); opacity: 1; }
-    }
-    @keyframes toast-out {
-      to { transform: translateY(-16px) scale(0.95); opacity: 0; }
-    }
-    /* Kartu bergetar saat jawaban salah */
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      20% { transform: translateX(-8px); }
-      40% { transform: translateX(8px); }
-      60% { transform: translateX(-5px); }
-      80% { transform: translateX(5px); }
-    }
-    /* Skala membesar sedikit lalu normal (emoji / elemen penting) */
-    @keyframes pop-in {
-      0% { transform: scale(0.6); opacity: 0; }
-      60% { transform: scale(1.08); }
-      80% { transform: scale(0.97); }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    /* Slide up + fade untuk transisi antar soal & elemen hasil */
-    @keyframes fade-up {
-      from { transform: translateY(18px); opacity: 0; }
-      to   { transform: translateY(0); opacity: 1; }
-    }
-    /* Opsi jawaban muncul berurutan (stagger) */
-    @keyframes opt-in {
-      from { transform: translateY(14px) scale(0.98); opacity: 0; }
-      to   { transform: translateY(0) scale(1); opacity: 1; }
-    }
-    /* Denyut halus saat opsi dipilih */
-    @keyframes select-pulse {
-      0% { transform: scale(1); }
-      40% { transform: scale(1.035); }
-      100% { transform: scale(1); }
-    }
-    /* Angka skor membesar saat reveal */
-    @keyframes score-pop {
-      0% { transform: scale(0.5); opacity: 0; }
-      55% { transform: scale(1.15); }
-      75% { transform: scale(0.96); }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    .toast-show  { animation: toast-pop 0.25s ease-out; }
-    .toast-hide  { animation: toast-out 0.3s ease-in forwards; }
-    .shake       { animation: shake 0.45s ease-in-out; }
-    .pop-in      { animation: pop-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
-    .fade-up     { animation: fade-up 0.45s ease-out both; }
-    .opt-in      { animation: opt-in 0.4s ease-out both; }
-    .select-pulse{ animation: select-pulse 0.3s ease-out; }
-    .score-pop   { animation: score-pop 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
-  </style>
-  <script src="/js/theme.js"></script>
-  <link rel="stylesheet" href="/theme.css" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script>document.documentElement.classList.add('js');</script>
 </head>
-<body class="bg-canvas font-sans text-stone-900 antialiased min-h-screen">
+<body>
 
-  <!-- ===== Navigation Bar ===== -->
-  <nav class="sticky top-0 z-20 border-b border-stone-200/70 bg-white/80 backdrop-blur-md">
-    <div class="mx-auto flex h-16 max-w-3xl items-center justify-between px-5 sm:px-8">
-      <a href="/dashboard.html" class="flex items-center gap-2.5 transition-opacity duration-200 hover:opacity-75">
-        <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-teal-700 font-extrabold text-white">E</span>
-        <span class="text-xl font-extrabold tracking-tight">ExamD</span>
-      </a>
-      <div class="flex items-center gap-2 rounded-full bg-amber-50 px-3.5 py-1.5 text-sm font-semibold text-amber-700 tabular-nums">
-        <span aria-hidden="true">⭐</span><span id="nav-points">–</span>
+  <nav class="topbar" aria-label="Navigasi utama">
+    <div class="topbar-in">
+      <a class="wordmark" href="/dashboard.html">ExamD</a>
+      <div class="topbar-side">
+        <a class="ghostlink" href="/dashboard.html">&larr; Dashboard</a>
+        <span class="topbar-points"><span class="num" id="nav-points">0</span><span>Poin</span></span>
       </div>
     </div>
   </nav>
 
-  <main class="mx-auto max-w-3xl px-5 sm:px-8 py-10">
+  <main class="quiz-wrap">
 
-    <!-- Header -->
-    <div class="mb-8">
-      <a href="/dashboard.html"
-        class="mb-3 inline-flex items-center gap-1.5 text-sm font-medium text-stone-400 transition-colors duration-200 hover:text-teal-700">
-        <span aria-hidden="true">←</span> Dashboard
-      </a>
-      <h1 id="quiz-title" class="text-3xl font-bold tracking-tight">Memuat…</h1>
-      <p id="quiz-subtitle" class="mt-1.5 text-[15px] text-stone-500"></p>
+    <!-- Memuat -->
+    <div id="quiz-loading" class="loading">Memuat soal&hellip;</div>
+    <!-- Gagal memuat -->
+    <div id="quiz-error" class="sheet state" hidden>
+      <h1 class="display state-h">Sesinya gagal dibuka.</h1>
+      <p id="quiz-error-msg" class="state-p"></p>
+      <a href="/dashboard.html" class="btn btn--ink">Kembali ke Dashboard</a>
     </div>
 
-    <!-- Loading -->
-    <div id="quiz-loading" class="py-20 text-center text-sm text-stone-400">Memuat soal…</div>
+    <!-- Lembar jawaban -->
+    <div id="quiz-content">
+      <header class="sheet-head">
+        <h1 id="quiz-title" class="display quiz-h rise">Quiz &hellip;</h1>
+        <p id="quiz-subtitle" class="quiz-meta rise" style="--d:70ms"></p>
+      </header>
 
-    <!-- Error -->
-    <div id="quiz-error" class="hidden rounded-2xl bg-white p-10 text-center shadow-soft ring-1 ring-stone-900/5">
-      <p class="text-4xl">😕</p>
-      <p id="quiz-error-msg" class="mt-4 text-stone-600"></p>
-      <a href="/dashboard.html"
-        class="mt-6 inline-block rounded-xl bg-teal-700 px-5 py-2.5 text-sm font-semibold text-white shadow-soft transition-all duration-200 hover:bg-teal-800 hover:shadow-lift active:scale-95">
-        Kembali ke Dashboard
-      </a>
-    </div>
+      <!-- Ruang ujian: foto arsip -->
+      <figure class="quizpic rise" style="--d:140ms">
+        <img src="/assets/ujian-nasional-2009.jpg"
+             alt="Barisan siswa mengerjakan ujian di ruang kelas, foto arsip 2009" />
+        <figcaption>Sesi latihan ini serius seperti ujian sebenarnya; foto arsip ruang ujian, 2009.</figcaption>
+      </figure>
 
-    <!-- ===== Konten Quiz ===== -->
-    <div id="quiz-content" class="hidden">
-
-      <!-- Progress -->
-      <div class="mb-7">
-        <div class="mb-2 flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-stone-400">
-          <span id="progress-label">Soal 1 dari 25</span>
-          <span id="progress-pct" class="tabular-nums">0%</span>
-        </div>
-        <div class="h-1.5 overflow-hidden rounded-full bg-stone-200/70">
-          <div id="progress-bar" class="h-full rounded-full bg-gradient-to-r from-teal-600 to-teal-500 transition-all duration-500 ease-out" style="width: 0%"></div>
-        </div>
+      <!-- The real thing: garis gelembung live -->
+      <div class="gauge-line rise" style="--d:200ms">
+        <p class="gauge-txt" id="progress-label">Soal 1 dari 25</p>
+        <div id="gauge" class="gauge" aria-hidden="true"></div>
       </div>
 
-      <!-- Kartu soal (transisi fade-up via inline transform di quiz.js) -->
-      <div id="question-card" class="rounded-2xl bg-white p-6 shadow-soft ring-1 ring-stone-900/5 transition-all duration-400 ease-out sm:p-8">
-        <div class="mb-4 flex items-center gap-2">
-          <span id="question-badge" class="rounded-full bg-teal-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-teal-700">LOTS</span>
-          <span id="question-num" class="text-xs font-semibold text-stone-400 tabular-nums"></span>
-        </div>
-        <p id="question-text" class="mb-7 text-lg font-semibold leading-relaxed tracking-tight sm:text-xl"></p>
-        <div id="options" class="grid gap-2.5"></div>
-      </div>
+      <section id="question-card" class="sheet pop" style="--d:260ms" aria-live="polite">
+        <div class="sheet-pad" style="padding-top:28px;padding-bottom:28px">
+          <p class="qmeta" id="question-num"></p>
+          <p id="question-text" class="qtext"></p>
+          <div id="options" class="options"></div>
 
-      <!-- Aksi -->
-      <div class="mt-6 flex justify-end gap-3">
-        <button id="submit-btn" type="button" disabled
-          class="rounded-xl bg-teal-700 px-6 py-3 text-sm font-semibold text-white shadow-soft transition-all duration-200
-                 hover:bg-teal-800 hover:shadow-lift active:scale-95
-                 disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none disabled:active:scale-100 disabled:hover:bg-teal-700">
-          Submit Jawaban
-        </button>
-        <button id="next-btn" type="button"
-          class="hidden rounded-xl bg-stone-900 px-6 py-3 text-sm font-semibold text-white shadow-soft transition-all duration-200 hover:bg-stone-800 hover:shadow-lift active:scale-95">
-          Berikutnya <span aria-hidden="true">→</span>
-        </button>
-      </div>
-
-    </div>
-
-    <!-- ===== Ringkasan Skor (Score Reveal) ===== -->
-    <div id="summary" class="hidden rounded-2xl bg-white p-8 text-center shadow-soft ring-1 ring-stone-900/5 sm:p-10">
-      <p id="sum-emoji" class="mb-4 text-6xl">🎉</p>
-      <h2 id="sum-title" class="fade-up text-2xl font-bold tracking-tight" style="animation-delay: 120ms"></h2>
-      <p id="sum-sub" class="fade-up mt-1.5 text-sm text-stone-500" style="animation-delay: 200ms"></p>
-
-      <!-- Skor besar + ring akurasi -->
-      <div class="my-9 flex items-center justify-center gap-10 sm:gap-14">
-        <div>
-          <p id="sum-score" class="score-pop text-5xl font-extrabold tracking-tight text-stone-900 tabular-nums sm:text-6xl">0/0</p>
-          <p class="mt-2 text-[11px] font-medium uppercase tracking-wider text-stone-400">Jawaban Benar</p>
-        </div>
-        <div class="relative h-28 w-28 sm:h-32 sm:w-32">
-          <svg viewBox="0 0 100 100" class="h-full w-full -rotate-90">
-            <circle cx="50" cy="50" r="42" fill="none" stroke="#493038" stroke-width="10" />
-            <circle id="acc-ring" cx="50" cy="50" r="42" fill="none" stroke="#fb7185" stroke-width="10"
-              stroke-linecap="round" stroke-dasharray="263.9" stroke-dashoffset="263.9"
-              style="transition: stroke-dashoffset 1.2s cubic-bezier(0.22, 1, 0.36, 1)" />
-          </svg>
-          <div class="absolute inset-0 flex items-center justify-center">
-            <span id="sum-accuracy" class="text-lg font-bold tracking-tight text-teal-700 tabular-nums">0%</span>
+          <div class="quiz-actions">
+            <button id="submit-btn" type="button" class="btn" disabled>Kirim Jawaban</button>
+            <button id="next-btn" type="button" class="btn btn--ink" hidden>Lanjut</button>
           </div>
         </div>
-      </div>
-
-      <!-- Poin sesi -->
-      <div class="fade-up mb-8 flex justify-center" style="animation-delay: 350ms">
-        <span id="sum-points" class="inline-flex items-center gap-2 rounded-full bg-teal-50 px-5 py-2.5 text-sm font-bold text-teal-700 tabular-nums">+0 poin</span>
-      </div>
-
-      <div class="fade-up" style="animation-delay: 450ms">
-        <a href="/dashboard.html"
-          class="inline-block rounded-xl bg-teal-700 px-6 py-3 text-sm font-semibold text-white shadow-soft transition-all duration-200 hover:bg-teal-800 hover:shadow-lift active:scale-95">
-          Kembali ke Dashboard
-        </a>
-      </div>
+      </section>
     </div>
+
+    <!-- Hasil -->
+    <section id="summary" class="sheet state" hidden aria-live="polite">
+      <h2 id="sum-title" class="display sum-h"></h2>
+      <p id="sum-sub" class="sum-sub"></p>
+
+      <div class="sum-big">
+        <div>
+          <p class="num sum-score" id="sum-score">0/0</p>
+          <p class="sum-caption">Jawaban benar</p>
+        </div>
+        <div class="sum-ring">
+          <svg viewBox="0 0 100 100" role="img" aria-label="Ring akurasi jawaban benar">
+            <circle class="track" cx="50" cy="50" r="42" />
+            <circle id="acc-ring" class="meter" cx="50" cy="50" r="42" stroke-dasharray="263.9" stroke-dashoffset="263.9"
+              style="transition: stroke-dashoffset 1.2s cubic-bezier(0.22, 1, 0.36, 1)" />
+          </svg>
+          <span class="pct num" id="sum-accuracy">0%</span>
+        </div>
+      </div>
+
+      <!-- Ruang tempat hasil bekerja -->
+      <dl class="ledger">
+        <div><dt>Salah</dt><dd class="num" id="ledger-wrong">0</dd></div>
+        <div><dt>Poin sesi ini</dt><dd class="num" id="ledger-points">+0</dd></div>
+        <div><dt>Total poin kamu</dt><dd class="num" id="ledger-total">0</dd></div>
+      </dl>
+
+      <div class="sum-cta">
+        <a href="/dashboard.html" class="btn btn--ink">Kembali ke Dashboard</a>
+      </div>
+    </section>
+
+    <!-- Galeri arsip: selalu tampil di bawah lembar -->
+    <figure class="sum-gallery" data-crossfade aria-label="Suasana ruang ujian">
+      <img src="/assets/ujian-nasional-2009.jpg" alt="Ruang ujian penuh siswa, foto arsip 2009" class="is-on" />
+      <img src="/assets/female-students-ujian-nasional-2009.jpg" alt="Siswi fokus menjawab lembar soal" />
+      <img src="/assets/the-atmosphere-of-a-junior-high-school-2.jpg" alt="Kelas saat pelajaran berlangsung" />
+      <figcaption>Foto arsip ruang kelas dan ujian; latihan di halaman ini meniru cara kerja ujian sungguhan.</figcaption>
+    </figure>
 
   </main>
 
-  <!-- Toast -->
-  <div id="toast" class="pointer-events-none fixed inset-x-0 top-24 z-50 hidden flex justify-center">
-    <div id="toast-inner" class="rounded-full px-6 py-3 text-sm font-semibold text-white shadow-lift"></div>
-  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script src="/js/app.js"></script>
   <script src="/js/quiz.js"></script>
+  <script src="/js/ui.js"></script>
 </body>
 </html>

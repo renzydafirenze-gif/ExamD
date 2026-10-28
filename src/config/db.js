@@ -11,7 +11,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '../../.env'), 
 const { Pool } = require('pg');
 const bcrypt = require('bcryptjs');
 
-if (!process.env.DATABASE_URL) {
+if (!process.env.DATABASE_URL && !process.env.examd_DATABASE_URL) {
   console.warn(
     '[ExamD] PERINGATAN: DATABASE_URL tidak diset. Fallback ke PostgreSQL lokal.'
   );
@@ -19,6 +19,7 @@ if (!process.env.DATABASE_URL) {
 
 const connectionString =
   process.env.DATABASE_URL ||
+  process.env.examd_DATABASE_URL ||
   'postgresql://postgres:postgres@localhost:5432/examd';
 
 const pool = new Pool({
@@ -104,6 +105,30 @@ async function initDb() {
     'CREATE INDEX IF NOT EXISTS idx_quizzes_subject ON quizzes (lower(subject))'
   );
   await query('CREATE INDEX IF NOT EXISTS idx_users_lower_username ON users (lower(username))');
+
+  // Isi hanya database kosong; jangan mengganti soal atau poin yang sudah ada.
+  await withTransaction(async (client) => {
+    await client.query('LOCK TABLE quizzes IN SHARE ROW EXCLUSIVE MODE');
+    const count = await client.query('SELECT COUNT(*)::int AS total FROM quizzes');
+    if (count.rows[0].total !== 0) return;
+    const fs = require('fs');
+    const path = require('path');
+    const directory = path.join(__dirname, '../data');
+    const values = [];
+    const placeholders = [];
+    for (const file of fs.readdirSync(directory).filter(file => file.endsWith('.js')).sort()) {
+      const bank = require(path.join(directory, file));
+      for (const item of bank.items) {
+        const start = values.length;
+        placeholders.push(`($${start + 1}, $${start + 2}, $${start + 3}, $${start + 4}, $${start + 5})`);
+        values.push(bank.subject, item.q, JSON.stringify(item.o), item.a, item.d);
+      }
+    }
+    if (values.length) await client.query(
+      `INSERT INTO quizzes (subject, question, options, correct_answer, difficulty) VALUES ${placeholders.join(',')}`,
+      values
+    );
+  });
 }
 
 // ------------------------------------------------------------

@@ -1,6 +1,6 @@
 // ============================================================
 // ExamD - Frontend Logic (Vanilla JavaScript)
-// Halaman: login.html, dashboard.html, quiz.html
+// Halaman: login.html, dashboard.html, quiz.html (quiz di quiz.js)
 // ============================================================
 
 'use strict';
@@ -47,17 +47,14 @@ function escapeHTML(str) {
 // Tampilkan pesan di kotak alert (halaman login)
 function showAlert(message, type = 'error') {
   const box = document.getElementById('alert-box');
+  box.hidden = false;
   box.textContent = message;
-  box.className =
-    'mb-4 text-sm rounded-lg px-4 py-3 transition-all duration-200 ' +
-    (type === 'error'
-      ? 'bg-red-50 text-red-600'
-      : 'bg-green-50 text-green-700');
+  box.className = 'alert ' + (type === 'error' ? 'is-error' : 'is-ok');
 }
 
 function hideAlert() {
   const box = document.getElementById('alert-box');
-  box.className = 'hidden';
+  box.hidden = true;
 }
 
 // Auth guard: redirect ke login jika belum masuk.
@@ -81,15 +78,17 @@ function initLoginPage() {
   const formLogin = document.getElementById('form-login');
   const formRegister = document.getElementById('form-register');
 
-  const ACTIVE_TAB = 'flex-1 py-2 text-sm font-semibold rounded-md transition-all duration-200 bg-white text-indigo-600 shadow-sm';
-  const INACTIVE_TAB = 'flex-1 py-2 text-sm font-semibold rounded-md transition-all duration-200 text-gray-500 hover:text-gray-700';
-
   function switchTab(showRegister) {
     hideAlert();
-    formRegister.classList.toggle('hidden', !showRegister);
-    formLogin.classList.toggle('hidden', showRegister);
-    tabRegister.className = showRegister ? ACTIVE_TAB : INACTIVE_TAB;
-    tabLogin.className = showRegister ? INACTIVE_TAB : ACTIVE_TAB;
+    formRegister.hidden = !showRegister;
+    formLogin.hidden = showRegister;
+    tabRegister.setAttribute('aria-pressed', String(showRegister));
+    tabLogin.setAttribute('aria-pressed', String(!showRegister));
+    if (showRegister) {
+      document.getElementById('reg-username').focus();
+    } else {
+      document.getElementById('login-username').focus();
+    }
   }
 
   tabLogin.addEventListener('click', () => switchTab(false));
@@ -102,7 +101,7 @@ function initLoginPage() {
 
     const btn = document.getElementById('login-btn');
     btn.disabled = true;
-    btn.textContent = 'Memproses…';
+    btn.textContent = 'Memproses\u2026';
 
     try {
       await api('/api/login', {
@@ -142,7 +141,7 @@ function initLoginPage() {
 
     const btn = document.getElementById('register-btn');
     btn.disabled = true;
-    btn.textContent = 'Memproses…';
+    btn.textContent = 'Memproses\u2026';
 
     try {
       await api('/api/register', {
@@ -153,7 +152,7 @@ function initLoginPage() {
     } catch (err) {
       showAlert(err.message);
       btn.disabled = false;
-      btn.textContent = 'Daftar Sekarang';
+      btn.textContent = 'Daftar';
     }
   });
 }
@@ -163,37 +162,35 @@ function initLoginPage() {
 // ============================================================
 
 // Daftar mata pelajaran Kelas 10 SMA (Kurikulum Merdeka - Fase E),
-// dikelompokkan berdasarkan: wajib & peminatan/pilihan.
+// dikelompokkan: wajib & peminatan/pilihan.
 // Ketersediaan quiz dicek lewat /api/subjects.
 const ALL_SUBJECTS = [
   // ---- Kelompok Wajib ----
-  { name: 'Bahasa Indonesia', icon: '📖', desc: 'Teks, sastra, menulis kreatif', group: 'Wajib' , accent: '#C2410C' },
-  { name: 'Bahasa Inggris', icon: '🌐', desc: 'Reading, writing, conversation', group: 'Wajib' , accent: '#0284C7' },
-  { name: 'Matematika', icon: '📐', desc: 'Eksponen, logaritma, statistik', group: 'Wajib' , accent: '#7C3AED' },
-  { name: 'Pendidikan Pancasila', icon: '🇮🇩', desc: 'Pancasila, UUD, hak & kewajiban', group: 'Wajib' , accent: '#DC2626' },
-  { name: 'Seni dan Budaya', icon: '🎨', desc: 'Seni rupa, musik, tari, teater', group: 'Wajib' , accent: '#DB2777' },
-  { name: 'PJOK', icon: '⚽', desc: 'Kebugaran, olahraga, kesehatan', group: 'Wajib' , accent: '#16A34A' },
-  { name: 'Informatika', icon: '💻', desc: 'Algoritma, pemrograman, data', group: 'Wajib' , accent: '#0F766E' },
+  { name: 'Bahasa Indonesia', desc: 'Teks, sastra, menulis kreatif', group: 'Wajib' },
+  { name: 'Bahasa Inggris', desc: 'Reading, writing, conversation', group: 'Wajib' },
+  { name: 'Matematika', desc: 'Eksponen, logaritma, statistik', group: 'Wajib' },
+  { name: 'Pendidikan Pancasila', desc: 'Pancasila, UUD, hak & kewajiban', group: 'Wajib' },
+  { name: 'Seni dan Budaya', desc: 'Seni rupa, musik, tari, teater', group: 'Wajib' },
+  { name: 'PJOK', desc: 'Kebugaran, olahraga, kesehatan', group: 'Wajib' },
+  { name: 'Informatika', desc: 'Algoritma, pemrograman, data', group: 'Wajib' },
 
   // ---- Kelompok Peminatan / Pilihan ----
-  { name: 'Fisika', icon: '⚛️', desc: 'Gerak, gaya, hukum Newton', group: 'Peminatan' , accent: '#2563EB' },
-  { name: 'Kimia', icon: '🧪', desc: 'Zat, atom, ikatan kimia', group: 'Peminatan' , accent: '#9333EA' },
-  { name: 'Biologi', icon: '🧬', desc: 'Makhluk hidup, sel, ekosistem', group: 'Peminatan' , accent: '#059669' },
-  { name: 'Sejarah', icon: '🏛️', desc: 'Ilmu sejarah & peradaban', group: 'Peminatan' , accent: '#B45309' },
-  { name: 'Geografi', icon: '🗺️', desc: 'Ruang, peta, fenomena bumi', group: 'Peminatan' , accent: '#0891B2' },
-  { name: 'Ekonomi', icon: '💰', desc: 'Pasar, kebutuhan, ekonomi digital', group: 'Peminatan' , accent: '#CA8A04' },
-  { name: 'Sosiologi', icon: '👥', desc: 'Masyarakat, interaksi sosial', group: 'Peminatan' , accent: '#4F46E5' },
+  { name: 'Fisika', desc: 'Gerak, gaya, hukum Newton', group: 'Peminatan' },
+  { name: 'Kimia', desc: 'Zat, atom, ikatan kimia', group: 'Peminatan' },
+  { name: 'Biologi', desc: 'Makhluk hidup, sel, ekosistem', group: 'Peminatan' },
+  { name: 'Sejarah', desc: 'Ilmu sejarah & peradaban', group: 'Peminatan' },
+  { name: 'Geografi', desc: 'Ruang, peta, fenomena bumi', group: 'Peminatan' },
+  { name: 'Ekonomi', desc: 'Pasar, kebutuhan, ekonomi digital', group: 'Peminatan' },
+  { name: 'Sosiologi', desc: 'Masyarakat, interaksi sosial', group: 'Peminatan' },
 ];
 
 async function initDashboardPage() {
   const user = await requireLogin();
   if (!user) return;
 
-  // Sapaan selamat datang + data user
-  document.getElementById('greeting').innerHTML =
-    'Selamat datang di <span class="text-indigo-600">ExamD</span>, ' +
-    escapeHTML(user.username) + '!';
-  document.getElementById('nav-username').textContent = user.username;
+  // Sapaan + identitas + poin
+  document.getElementById('greeting-name').textContent = ', ' + user.username;
+  document.getElementById('nav-user').textContent = user.username;
   document.getElementById('user-points').textContent = user.points;
 
   // ---- Logout ----
@@ -205,7 +202,7 @@ async function initDashboardPage() {
     }
   });
 
-  // ---- Render grid mata pelajaran ----
+  // ---- Render lajurof mata pelajaran ----
   const grid = document.getElementById('subject-grid');
 
   let available = [];
@@ -216,46 +213,51 @@ async function initDashboardPage() {
     // Jika gagal, anggap semua belum tersedia
   }
 
-  grid.innerHTML = ALL_SUBJECTS.map((subject, idx) => {
+  const rowHTML = (subject) => {
     const isActive = available.includes(subject.name);
-    const acc = ['#fb7185', '#fda4af', '#f87171', '#e8798e'][idx % 4];
-    const base =
-      'group relative flex flex-col rounded-2xl bg-white p-6 text-left ring-1 transition-all duration-300 ease-out ';
-    const card = isActive
-      ? base +
-        'ring-stone-900/5 shadow-soft cursor-pointer hover:shadow-lift hover:-translate-y-1.5 hover:scale-[1.02] hover:ring-2 hover:ring-[color:var(--acc)] active:translate-y-0 active:scale-[0.99]'
-      : base + 'ring-stone-900/5 opacity-50 cursor-not-allowed';
-
-    const badge = subject.group === 'Wajib'
-      ? '<span class="rounded-full bg-teal-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-teal-700">Wajib</span>'
-      : '<span class="rounded-full bg-amber-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-700">Peminatan</span>';
+    const tagOpen = isActive ? 'a' : 'div';
+    const tagClose = isActive ? 'a' : 'div';
+    const href = isActive
+      ? ` href="/quiz.html?subject=${encodeURIComponent(subject.name)}"`
+      : '';
+    const meta = isActive
+      ? '<span class="row-meta"><span class="num">25</span><span>soal</span></span>'
+      : '<span class="row-meta">Segera</span>';
 
     return `
-      <${isActive ? 'a' : 'div'}
-        ${isActive ? `href="/quiz.html?subject=${encodeURIComponent(subject.name)}"` : ''}
-        class="${card} fade-up" style="--acc:${acc}; animation-delay: ${idx * 45}ms"
-        ${isActive ? '' : 'aria-disabled="true"'}
-      >
-        <div class="mb-4 flex items-start justify-between">
-          <div class="flex h-12 w-12 items-center justify-center rounded-xl text-2xl transition-all duration-300 group-hover:scale-110 group-hover:-rotate-6" style="background: ${acc}14; color: ${acc}">${subject.icon}</div>
-          ${badge}
-        </div>
-        <h3 class="font-bold tracking-tight text-stone-900 transition-colors duration-300 group-hover:text-[color:var(--acc)]">
-          ${escapeHTML(subject.name)}
-        </h3>
-        <p class="mt-1 text-[13px] leading-relaxed text-stone-500">${escapeHTML(subject.desc)}</p>
-        <div class="mt-4 flex items-center justify-between border-t border-stone-100 pt-3">
-          ${
-            isActive
-              ? '<span class="text-xs font-semibold text-stone-500 transition-colors duration-300 group-hover:text-[color:var(--acc)]">Mulai Quiz</span>'
-              : '<span class="text-xs font-semibold text-stone-400">Segera</span>'
-          }
-          <span class="flex h-7 w-7 items-center justify-center rounded-full bg-stone-100 text-stone-400 transition-all duration-300 group-hover:bg-[color:var(--acc)] group-hover:text-white group-hover:translate-x-0.5">→</span>
-        </div>
-      </${isActive ? 'a' : 'div'}>`;
-  }).join('');
-}
+      <${tagOpen}${href} class="row rise${isActive ? '' : ' is-off'}" ${isActive ? '' : 'aria-disabled="true"'}>
+        <span class="bubble" aria-hidden="true"></span>
+        <span class="row-id">
+          <span class="row-name">${escapeHTML(subject.name)}</span>
+          <span class="row-desc">${escapeHTML(subject.desc)}</span>
+        </span>
+        ${meta}
+      </${tagClose}>`;
+  };
 
+  const groups = ['Wajib', 'Peminatan'];
+  grid.innerHTML = groups
+    .map((group) => {
+      const list = ALL_SUBJECTS.filter((s) => s.group === group);
+      return `<p class="group rise">${group}</p><div class="rows">${list.map(rowHTML).join('')}</div>`;
+    })
+    .join('');
+
+  // Amati elemen hasil render JS untuk lapisan masuk
+  const rises = grid.querySelectorAll('.rise');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+    rises.forEach((el) => el.classList.add('is-in'));
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-in');
+        io.unobserve(entry.target);
+      });
+    }, { threshold: 0.12 });
+    rises.forEach((el) => io.observe(el));
+  }
+}
 
 // ============================================================
 // Deteksi halaman berdasarkan path URL

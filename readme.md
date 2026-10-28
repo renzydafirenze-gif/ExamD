@@ -4,7 +4,7 @@ Website belajar **Quiz interaktif** untuk materi **Kelas 10 SMA** (Kurikulum Mer
 
 ## Tech Stack
 
-- **Frontend** : HTML, Vanilla JavaScript, Tailwind CSS (CDN), font Inter
+- **Frontend** : HTML, Vanilla JavaScript, CSS token sendiri (`public/styles.css`), font Bebas Neue + EB Garamond
 - **Backend**  : Node.js + Express.js
 - **Database** : **PostgreSQL** (library `pg`) — siap deploy Vercel serverless
 
@@ -23,10 +23,13 @@ ExamD/
 │   ├── data/            # Bank soal per mapel (14 file x 25 soal)
 │   └── routes/          # (dicadangkan untuk refactor lanjutan)
 └── public/              # Frontend (login, dashboard, quiz)
+    ├── index.html       # Pengalih ke dashboard
     ├── login.html
     ├── dashboard.html
     ├── quiz.html
-    └── js/ (app.js, quiz.js)
+    ├── styles.css       # Token warna/tipe + seluruh gaya halaman
+    ├── assets/          # Foto arsip (kredit di footer tiap halaman)
+    └── js/ (app.js, quiz.js, learn.js, ui.js)
 ```
 
 ## Skema Database (PostgreSQL)

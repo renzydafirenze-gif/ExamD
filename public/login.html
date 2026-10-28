@@ -3,112 +3,94 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ExamD - Masuk / Daftar</title>
+  <meta name="color-scheme" content="light dark" />
+  <title>ExamD — Masuk &amp; Daftar</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-          },
-          colors: { canvas: '#FAFAF8' },
-          boxShadow: {
-            soft: '0 1px 2px rgb(16 24 40 / 0.04), 0 1px 3px rgb(16 24 40 / 0.06)',
-            lift: '0 12px 32px -8px rgb(16 24 40 / 0.12), 0 4px 8px -4px rgb(16 24 40 / 0.04)',
-          },
-        },
-      },
-    };
-  </script>
-  <script src="/js/theme.js"></script>
-  <link rel="stylesheet" href="/theme.css" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script>document.documentElement.classList.add('js');</script>
 </head>
-<body class="bg-canvas font-sans text-stone-900 antialiased min-h-screen flex items-center justify-center px-4">
+<body>
 
-  <!-- Kartu utama -->
-  <div class="w-full max-w-md">
-    <!-- Logo -->
-    <div class="text-center mb-8">
-      <h1 class="text-4xl font-extrabold text-teal-700 tracking-tight">ExamD</h1>
-      <p class="text-stone-500 mt-2 text-sm">Belajar jadi seru dengan quiz interaktif</p>
-    </div>
+  <main class="login-grid">
 
-    <div class="rounded-2xl bg-white p-8 shadow-soft ring-1 ring-stone-900/5">
+    <!-- Ruang ujian: foto arsip dari sekolah Indonesia -->
+    <aside class="login-pane" data-crossfade aria-label=" suasana ujian dan belajar di sekolah Indonesia">
+      <img src="/assets/ujian-nasional-2009.jpg" alt="Ruang kelas penuh saat ujian: siswa berseragam putih menulis di meja kayu" class="is-on" fetchpriority="high" />
+      <img src="/assets/the-atmosphere-of-a-junior-high-school.jpg" alt="Siswa mengikuti pelajaran di depan layar peta dunia" loading="lazy" />
+      <img src="/assets/female-students-ujian-nasional-2009.jpg" alt="Siswi menunduk menjawab lembar soal ujian di bawah sinar matahari" loading="lazy" />
+      <img src="/assets/the-atmosphere-of-a-junior-high-school-2.jpg" alt="Sisi lain kelas saat pelajaran, layar menampilkan materi peta dunia" loading="lazy" />
+    </aside>
 
-      <!-- Toggle Login / Register -->
-      <div class="flex bg-gray-100 rounded-lg p-1 mb-6">
-        <button id="tab-login" type="button"
-          class="flex-1 py-2 text-sm font-semibold rounded-md transition-all duration-200 bg-white text-teal-700 shadow-sm">
-          Masuk
-        </button>
-        <button id="tab-register" type="button"
-          class="flex-1 py-2 text-sm font-semibold rounded-md transition-all duration-200 text-gray-500 hover:text-stone-700">
-          Daftar
-        </button>
+    <!-- Lembar kartu ujian -->
+    <section class="login-card sheet" aria-labelledby="login-h">
+      <div class="band band--20 pop" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
       </div>
 
-      <!-- Pesan error / sukses -->
-      <div id="alert-box" class="hidden mb-4 text-sm rounded-lg px-4 py-3 transition-all duration-200"></div>
+      <div class="login-body">
+        <p class="login-mark display pop" id="login-h">ExamD</p>
 
-      <!-- Form Login -->
-      <form id="form-login" class="space-y-4">
-        <div>
-          <label for="login-username" class="block text-[13px] font-semibold text-stone-600 mb-1.5">Username</label>
-          <input id="login-username" type="text" required autocomplete="username"
-            placeholder="masukkan username"
-            class="w-full px-4 py-2.5 rounded-lg border border-stone-200 bg-white text-sm outline-none transition-all duration-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-100" />
-        </div>
-        <div>
-          <label for="login-password" class="block text-[13px] font-semibold text-stone-600 mb-1.5">Password</label>
-          <input id="login-password" type="password" required autocomplete="current-password"
-            placeholder="masukkan password"
-            class="w-full px-4 py-2.5 rounded-lg border border-stone-200 bg-white text-sm outline-none transition-all duration-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-100" />
-        </div>
-        <button type="submit" id="login-btn"
-          class="w-full py-2.5 rounded-lg bg-teal-700 text-white text-sm font-semibold shadow-soft transition-all duration-200 hover:bg-teal-800 hover:shadow-lift active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed">
-          Masuk
-        </button>
-      </form>
+        <h1 class="display login-h rise">Ujian dimulai di&nbsp;sini.</h1>
+        <p class="login-sub rise" style="--d:80ms">
+          Latihan ujian untuk siswa SMA Kelas X: jawab soal per mata pelajaran,
+          dapat poin tiap jawaban benar, dan pantau perkembanganmu.
+        </p>
 
-      <!-- Form Register (tersembunyi secara default) -->
-      <form id="form-register" class="space-y-4 hidden">
-        <div>
-          <label for="reg-username" class="block text-[13px] font-semibold text-stone-600 mb-1.5">Username</label>
-          <input id="reg-username" type="text" required autocomplete="username"
-            placeholder="3-30 karakter"
-            class="w-full px-4 py-2.5 rounded-lg border border-stone-200 bg-white text-sm outline-none transition-all duration-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-100" />
+        <div class="tabs" role="tablist" aria-label="Pilih aksi">
+          <button type="button" id="tab-login" class="tab rise" style="--d:140ms" aria-pressed="true">Masuk</button>
+          <button type="button" id="tab-register" class="tab rise" style="--d:190ms" aria-pressed="false">Daftar</button>
         </div>
-        <div>
-          <label for="reg-password" class="block text-[13px] font-semibold text-stone-600 mb-1.5">Password</label>
-          <input id="reg-password" type="password" required autocomplete="new-password"
-            placeholder="minimal 6 karakter"
-            class="w-full px-4 py-2.5 rounded-lg border border-stone-200 bg-white text-sm outline-none transition-all duration-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-100" />
-        </div>
-        <div>
-          <label for="reg-confirm" class="block text-[13px] font-semibold text-stone-600 mb-1.5">Konfirmasi Password</label>
-          <input id="reg-confirm" type="password" required autocomplete="new-password"
-            placeholder="ulangi password"
-            class="w-full px-4 py-2.5 rounded-lg border border-stone-200 bg-white text-sm outline-none transition-all duration-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-100" />
-        </div>
-        <button type="submit" id="register-btn"
-          class="w-full py-2.5 rounded-lg bg-teal-700 text-white text-sm font-semibold shadow-soft transition-all duration-200 hover:bg-teal-800 hover:shadow-lift active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed">
-          Daftar Sekarang
-        </button>
-      </form>
+        <div id="alert-box" class="alert is-error" role="alert" hidden></div>
 
-    </div>
+        <form id="form-login" class="login-form">
+          <div class="field rise" style="--d:200ms">
+            <label for="login-username">Username</label>
+            <input id="login-username" type="text" required autocomplete="username" placeholder="username kamu" />
+          </div>
+          <div class="field rise" style="--d:260ms">
+            <label for="login-password">Password</label>
+            <input id="login-password" type="password" required autocomplete="current-password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />
+          </div>
+          <button type="submit" id="login-btn" class="btn rise" style="--d:320ms">Masuk</button>
+        </form>
 
-    <p class="text-center text-xs text-gray-400 mt-6">
-      Akun demo: <span class="font-mono">demo</span> / <span class="font-mono">demo123</span>
-    </p>
-  </div>
+        <form id="form-register" class="login-form" hidden>
+          <div class="field rise" style="--d:200ms">
+            <label for="reg-username">Username</label>
+            <input id="reg-username" type="text" required autocomplete="username" placeholder="3&ndash;30 karakter" />
+          </div>
+          <div class="field rise" style="--d:260ms">
+            <label for="reg-password">Password</label>
+            <input id="reg-password" type="password" required autocomplete="new-password" placeholder="minimal 6 karakter" />
+          </div>
+          <div class="field rise" style="--d:320ms">
+            <label for="reg-confirm">Konfirmasi password</label>
+            <input id="reg-confirm" type="password" required autocomplete="new-password" placeholder="ulangi password" />
+          </div>
+          <button type="submit" id="register-btn" class="btn rise" style="--d:380ms">Daftar</button>
+        </form>
+      </div>
 
-  <script src="js/app.js"></script>
+      <div class="login-foot tear">
+        <p class="rise" style="--d:320ms">Akun coba: <strong>demo</strong> / <strong>demo123</strong></p>
+        <p class="credits rise" style="--d:360ms">
+          Foto: <a href="https://commons.wikimedia.org/wiki/File:Ujian_Nasional_2009.jpg">&ldquo;Ujian Nasional 2009&rdquo;</a> (nugroho khoironi, CC&nbsp;BY-SA&nbsp;2.0)
+          &amp; <a href="https://commons.wikimedia.org/wiki/File:The_atmosphere_of_a_junior_high_school_classroom_in_Indonesia.jpg">&ldquo;Suasana kelas&rdquo;</a> (Fitrah 9131, CC&nbsp;BY&nbsp;3.0), Wikimedia&nbsp;Commons.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/ui.js"></script>
 </body>
 </html>

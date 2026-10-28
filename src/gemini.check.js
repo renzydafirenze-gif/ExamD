@@ -16,7 +16,7 @@ const { generateLesson } = require('./gemini');
       return { ok: true, json: async () => ({ candidates: [{ content: { parts: [{ text: JSON.stringify({ answer: 'Eksponen adalah pangkat.', cards: [] }) }] } }] }) };
     };
     assert.equal((await generateLesson('Eksponen', 'explain')).answer, 'Eksponen adalah pangkat.');
-    global.fetch = async () => ({ ok: false, status: 429 });
+    global.fetch = async () => ({ ok: false, status: 429, json: async () => ({}) });
     await assert.rejects(generateLesson('Eksponen', 'task'), { status: 429 });
     console.log('Gemini: validasi, request, respons, dan batas kuota lolos (mock).');
   } finally {

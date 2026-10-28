@@ -23,6 +23,18 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Serverless tidak menjalankan cabang app.listen; siapkan DB sebelum API dipakai.
+let databaseReady;
+app.use('/api', (req, res, next) => {
+  if (!databaseReady) {
+    databaseReady = initDb().catch(error => {
+      databaseReady = undefined;
+      throw error;
+    });
+  }
+  databaseReady.then(() => next(), next);
+});
+
 if (process.env.NODE_ENV === 'production') {
   if (!process.env.SESSION_SECRET) {
     throw new Error('SESSION_SECRET wajib diatur di produksi.');
