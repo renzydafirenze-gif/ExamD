@@ -11,7 +11,7 @@ const bcrypt = require('bcryptjs');
 const path = require('path');
 
 const { pool, query, withTransaction, initDb } = require('./src/config/db');
-const { generateLesson } = require('./src/gemini');
+const { generateLesson } = require('./src/ai');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -92,7 +92,7 @@ app.post('/api/learn', requireAuth, asyncHandler(async (req, res, next) => {
   } catch (err) {
     if (err.status) return res.status(err.status).json({ error: err.message });
     if (err.name === 'TimeoutError' || err instanceof TypeError) {
-      return res.status(502).json({ error: 'Koneksi Gemini gagal atau terlalu lama. Coba lagi.' });
+      return res.status(502).json({ error: 'Koneksi layanan AI gagal atau terlalu lama. Coba lagi.' });
     }
     next(err);
   }
