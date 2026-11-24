@@ -14,9 +14,24 @@ async function requestLesson(mode, topic) {
   lessonBusy = true;
   const buttons = [...learnForm.querySelectorAll('button'), ...learnActions.querySelectorAll('button')];
   buttons.forEach((button) => { button.disabled = true; });
+  const send = () => api('/api/learn', { method: 'POST', body: { topic, mode } });
+  // Kuota model gratis reset tiap menit; coba ulang otomatis saat penuh.
   learnStatus.textContent = 'ExamD sedang menyiapkan jawaban\u2026';
   try {
-    const result = await api('/api/learn', { method: 'POST', body: { topic, mode } });
+    const attemptSend = async (n) => {
+      try { return await send(); }
+      catch (err) {
+        if (n > 0 && /penuh|nanti/i.test(err.message || '')) return null;
+        throw err;
+      }
+    };
+    let result = await attemptSend(4);
+    for (let attempt = 1; !result && attempt <= 4; attempt++) {
+      learnStatus.textContent = `Model gratis sedang penuh, mencoba ulang otomatis (${attempt}/4)\u2026`;
+      await new Promise((resolve) => setTimeout(resolve, 20000));
+      result = await attemptSend(4 - attempt);
+    }
+    if (!result) throw new Error('Semua model gratis sedang penuh. Coba lagi beberapa saat lagi.');
     document.getElementById('learn-answer').textContent = result.answer;
     const cards = document.getElementById('learn-cards');
     cards.replaceChildren();
