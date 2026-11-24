@@ -16,80 +16,80 @@
 </head>
 <body>
 
-  <nav class="topbar" aria-label="Navigasi utama">
-    <div class="topbar-in">
-      <a class="wordmark" href="/dashboard.html">Exam<span>D</span></a>
-      <div class="navlinks">
-        <a class="ghostlink" href="/dashboard.html">&larr; Dashboard</a>
-      </div>
-      <div class="topbar-side">
-        <span class="pointchip"><span class="num" id="nav-points">0</span><span>poin</span></span>
-      </div>
-    </div>
-  </nav>
-
   <main>
-    <div id="quiz-loading" class="loading">Memuat soal…</div>
 
-    <div id="quiz-error" class="state shell" hidden>
-      <h1 class="display state-h">Sesi gagal dibuka.</h1>
-      <p id="quiz-error-msg" class="state-p"></p>
-      <a href="/dashboard.html" class="btn">Kembali ke Dashboard</a>
+    <div class="board">
+      <div id="quiz-loading" class="loading">Memuat soal…</div>
+      <div id="quiz-error" class="tile c12 state" hidden>
+        <h1 class="display state-h">Sesi gagal dibuka.</h1>
+        <p id="quiz-error-msg" class="state-p"></p>
+        <a href="/dashboard.html" class="btn">Kembali ke Dashboard</a>
+      </div>
     </div>
 
-    <div id="quiz-content" class="quiz-shell">
-      <div class="quiz-main">
-        <header class="quiz-head rise">
-          <h1 id="quiz-title" class="display quiz-h">Quiz</h1>
-          <p id="quiz-subtitle" class="quiz-meta"></p>
-        </header>
+    <div id="quiz-content" class="board" hidden>
 
-        <section id="question-card" class="qcard rise" style="--d:60ms" aria-live="polite">
-          <p id="question-num" class="qmeta"></p>
-          <p id="question-text" class="qtext"></p>
-          <div id="options" class="options"></div>
+      <div class="nameband nameband--accent c9 rise"><h1 id="quiz-title">Quiz</h1></div>
+      <figure class="tile tile--photo c3 rise" style="--d:40ms; min-height:170px">
+        <img src="/assets/ujian-nasional-2009.jpg" alt="Barisan siswa mengerjakan ujian di ruang kelas, foto arsip 2009" loading="lazy" />
+      </figure>
 
-          <div class="quiz-actions">
-            <button id="submit-btn" type="button" class="btn" disabled>Kirim Jawaban</button>
-            <button id="next-btn" type="button" class="btn btn--ink" hidden>Lanjut</button>
-          </div>
-          <p class="keyhint">Pintasan: <kbd>1</kbd>–<kbd>4</kbd> memilih, <kbd>Enter</kbd> mengirim atau lanjut.</p>
+      <a class="navtile c3 rise" style="--d:70ms" href="/dashboard.html">&larr; Dashboard</a>
+      <div class="navtile navtile--info c3 rise" style="--d:100ms"><span class="num" id="nav-points">0</span><small>poin kamu</small></div>
+      <div class="navtile navtile--info c6 rise" style="--d:130ms"><small id="quiz-subtitle"></small></div>
+
+      <!-- Soal -->
+      <section id="question-card" class="tile c8 qcard rise" style="--d:160ms" aria-live="polite">
+        <p id="question-text" class="qtext"></p>
+        <div id="options" class="options"></div>
+        <p id="question-num" class="qmeta"></p>
+        <div class="quiz-actions">
+          <button id="submit-btn" type="button" class="btn" disabled>Kirim Jawaban</button>
+          <button id="next-btn" type="button" class="btn btn--ink" hidden>Lanjut</button>
+        </div>
+        <p class="keyhint">Pintasan: <kbd>1</kbd>–<kbd>4</kbd> memilih, <kbd>Enter</kbd> mengirim atau lanjut.</p>
+      </section>
+
+      <!-- Lembar jawaban -->
+      <div class="stack c4 qrail">
+        <section class="tile tile--ink h3 rise" style="--d:190ms" aria-label="Lembar jawaban">
+          <p class="tile-note">Lembar jawaban</p>
+          <div id="gauge" class="gauge" aria-hidden="true"></div>
         </section>
-
-        <figure class="qstrip rise" style="--d:80ms">
+        <div class="tile tile--ink h1 rise" style="--d:220ms">
+          <div class="rail-stats">
+            <div class="rail-stat"><span class="num" id="live-correct">0</span><span>benar</span></div>
+            <div class="rail-stat"><span class="num" id="live-streak">0</span><span>berturut</span></div>
+            <div class="rail-stat"><span class="num" id="live-points">0</span><span>poin sesi</span></div>
+          </div>
+        </div>
+        <figure class="tile tile--photo h2 rise" style="--d:250ms">
           <img src="/assets/female-students-ujian-nasional-2009.jpg" alt="Siswi menunduk menjawab lembar soal ujian" loading="lazy" />
-          <img src="/assets/the-atmosphere-of-a-junior-high-school.jpg" alt="Siswa mengikuti pelajaran di depan peta dunia" loading="lazy" />
-          <img src="/assets/the-atmosphere-of-a-junior-high-school-2.jpg" alt="Suasana kelas saat pelajaran berlangsung" loading="lazy" />
-          <figcaption>Arsip ruang ujian, 2009. Satu soal per layar, seperti lembar jawaban sungguhan.</figcaption>
         </figure>
       </div>
 
-      <aside class="qrail rise" style="--d:100ms" aria-label="Lembar jawaban dan skor">
-        <div class="rail-block">
-          <p class="rail-title">Lembar jawaban</p>
-          <div id="gauge" class="gauge" aria-hidden="true"></div>
-        </div>
-        <div class="rail-stats rise" style="--d:60ms">
-          <div class="rail-stat"><span class="num" id="live-correct">0</span><span>benar</span></div>
-          <div class="rail-stat"><span class="num" id="live-streak">0</span><span>berturut</span></div>
-          <div class="rail-stat"><span class="num" id="live-points">0</span><span>poin sesi</span></div>
-        </div>
-        <figure class="rail-photo rise" style="--d:100ms">
-          <img src="/assets/ujian-nasional-2009.jpg" alt="Barisan siswa mengerjakan ujian di ruang kelas, foto arsip 2009" loading="lazy" />
-        </figure>
-      </aside>
+      <!-- Strip arsip -->
+      <figure class="tile tile--photo c4 h2 rise" style="--d:280ms">
+        <img src="/assets/the-atmosphere-of-a-junior-high-school.jpg" alt="Siswa mengikuti pelajaran di depan layar peta dunia" loading="lazy" />
+      </figure>
+      <figure class="tile tile--photo c4 h2 rise" style="--d:310ms">
+        <img src="/assets/the-atmosphere-of-a-junior-high-school-2.jpg" alt="Suasana kelas saat pelajaran berlangsung" loading="lazy" />
+      </figure>
+      <div class="tile tile--step c4 h2 rise" style="--d:340ms">
+        <p class="tile-note">Arsip ruang ujian, 2009. Satu soal per layar, seperti lembar jawaban sungguhan.</p>
+      </div>
     </div>
 
-    <section id="summary" class="summary" hidden aria-live="polite">
-      <div class="summary-card">
-        <h2 id="sum-title" class="display summary-h"></h2>
-        <p id="sum-sub" class="sum-sub"></p>
-
-        <div class="sum-big">
-          <div>
-            <p class="num sum-score" id="sum-score">0/0</p>
-            <p class="sum-caption">Jawaban benar</p>
-          </div>
+    <!-- Hasil -->
+    <section id="summary" hidden aria-live="polite">
+      <div class="board">
+        <div class="tile c8 h3 rise">
+          <h2 id="sum-title" class="display tile-state"></h2>
+          <p id="sum-sub" class="tile-note"></p>
+          <p class="num sum-score" id="sum-score">0/0</p>
+          <p class="tile-note">Jawaban benar</p>
+        </div>
+        <div class="tile tile--soft c4 h3 rise" style="--d:60ms">
           <div class="sum-ring">
             <svg viewBox="0 0 100 100" role="img" aria-label="Ring akurasi jawaban benar">
               <circle class="track" cx="50" cy="50" r="42" />
@@ -98,24 +98,31 @@
             </svg>
             <span class="pct num" id="sum-accuracy">0%</span>
           </div>
+          <p class="tile-note">Akurasi sesi ini</p>
         </div>
 
-        <dl class="ledger">
+        <dl class="tile tile--ink c4 h2 ledger rise" style="--d:90ms">
           <div><dt>Salah</dt><dd class="num" id="ledger-wrong">0</dd></div>
           <div><dt>Poin sesi ini</dt><dd class="num" id="ledger-points">+0</dd></div>
           <div><dt>Total poin kamu</dt><dd class="num" id="ledger-total">0</dd></div>
         </dl>
-
-        <div class="sum-cta">
-          <button id="retry-btn" type="button" class="btn">Ulangi sesi</button>
-          <a href="/dashboard.html" class="btn btn--ink">Ganti mapel</a>
+        <div class="tile c8 h2 rise" style="--d:120ms">
+          <div class="sum-cta">
+            <button id="retry-btn" type="button" class="btn">Ulangi sesi</button>
+            <a href="/dashboard.html" class="btn btn--ink">Ganti mapel</a>
+          </div>
+          <p class="tile-note">Rekor terbaik per mapel tersimpan di perangkat ini dan muncul di dashboard.</p>
         </div>
-      </div>
 
-      <div class="summary-photos" aria-hidden="true">
-        <img src="/assets/female-students-ujian-nasional-2009.jpg" alt="" loading="lazy" />
-        <img src="/assets/the-atmosphere-of-a-junior-high-school-2.jpg" alt="" loading="lazy" />
-        <img src="/assets/the-atmosphere-of-a-junior-high-school.jpg" alt="" loading="lazy" />
+        <figure class="tile tile--photo c4 h2 rise" style="--d:150ms">
+          <img src="/assets/female-students-ujian-nasional-2009.jpg" alt="Siswi mengerjakan soal ujian" loading="lazy" />
+        </figure>
+        <figure class="tile tile--photo c4 h2 rise" style="--d:180ms">
+          <img src="/assets/the-atmosphere-of-a-junior-high-school-2.jpg" alt="Suasana kelas saat pelajaran" loading="lazy" />
+        </figure>
+        <figure class="tile tile--photo c4 h2 rise" style="--d:210ms">
+          <img src="/assets/the-atmosphere-of-a-junior-high-school.jpg" alt="Siswa di depan peta dunia" loading="lazy" />
+        </figure>
       </div>
     </section>
   </main>

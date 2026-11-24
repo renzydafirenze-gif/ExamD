@@ -264,6 +264,45 @@ async function initDashboardPage() {
     return hay.includes(query);
   }
 
+  // Lebar papan mengikuti lebar layar; ubin selalu mengisi baris, tanpa sel kosong.
+  function boardMode() {
+    const w = window.innerWidth;
+    if (w >= 1000) return { cols: 12, perRow: 4 };
+    if (w >= 620) return { cols: 6, perRow: 3 };
+    return { cols: 6, perRow: 2 };
+  }
+
+  function spansFor(n, cols, perRow) {
+    const spans = [];
+    let i = 0;
+    if (cols === 12 && n >= 2) { spans.push(6, 6); i = 2; }
+    // ponytail: pola lebar bergilir supaya tidak ada 3+ ubin identik berderet; penuh tanpa sel kosong
+    const patterns = cols === 12
+      ? [[6, 6], [5, 4, 3], [5, 3, 4], [3, 5, 4], [5, 3, 4], [4, 5, 3], [3, 4, 5], [5, 4, 3]]
+      : [[2, 4], [3, 3], [4, 2], [2, 2, 2], [3, 3], [2, 2, 2], [4, 2]];
+    let p = 0;
+    while (i < n) {
+      let row = patterns[p++ % patterns.length];
+      if (row.length > n - i) row = [n - i];
+      if (row.reduce((a, b) => a + b, 0) !== cols) row = [cols];
+      spans.push(...row); i += row.length;
+    }
+    return spans;
+  }
+
+  function renderRecords() {
+    const box = document.getElementById('records-list');
+    if (!box) return;
+    const scored = ALL_SUBJECTS
+      .map((s) => ({ name: s.name, best: getBest(s.name) }))
+      .filter((s) => s.best > 0)
+      .sort((a, b) => b.best - a.best)
+      .slice(0, 3);
+    box.innerHTML = scored.length
+      ? scored.map((s) => `<p><span>${escapeHTML(s.name)}</span><span class="num">${s.best}%</span></p>`).join('')
+      : '<p class="tile-note">Belum ada rekor. Selesaikan satu sesi, hasilnya muncul di sini.</p>';
+  }
+
   function render() {
     const query = search.value.trim().toLowerCase();
     const shown = ALL_SUBJECTS.filter(
@@ -273,13 +312,15 @@ async function initDashboardPage() {
     count.innerHTML =
       shown.length === 0
         ? 'Tidak ada mapel yang cocok.'
-        : `<strong>${shown.length}</strong> mapel ditampilkan`;
+        : `Menampilkan ${shown.length} dari ${ALL_SUBJECTS.length} mapel${query ? ` untuk pencarian \u201C${search.value.trim()}\u201D` : ''}`;
+
+    const { cols, perRow } = boardMode();
+    const spans = spansFor(shown.length, cols, perRow);
 
     grid.innerHTML = shown
       .map((subject, index) => {
         const isActive = available.includes(subject.name);
         const best = getBest(subject.name);
-        const wide = index === 0 && shown.length > 2 ? ' is-wide' : '';
         const tag = isActive ? 'a' : 'div';
         const href = isActive
           ? ` href="/quiz.html?subject=${encodeURIComponent(subject.name)}"`
@@ -288,14 +329,14 @@ async function initDashboardPage() {
         const bestLabel = best ? `<span class="subj-best">Terbaik ${best}%</span>` : '';
 
         return `
-          <${tag}${href} class="subject rise${wide}${isActive ? '' : ' is-off'}" style="--d:${Math.min(index * 30, 240)}ms">
+          <${tag}${href} class="subject rise${isActive ? '' : ' is-off'}" style="grid-column:span ${spans[index]};--d:${Math.min(index * 30, 240)}ms">
             <span class="subj-top">
               <span class="bubble" aria-hidden="true">${escapeHTML(subject.name[0])}</span>
               <span class="subj-meta">${meta}</span>
             </span>
             <span class="subj-name">${escapeHTML(subject.name)}</span>
             <span class="subj-desc">${escapeHTML(subject.desc)}</span>
-            <span class="subj-best-line">${bestLabel}</span>
+            ${bestLabel}
           </${tag}>`;
       })
       .join('');
@@ -328,7 +369,19 @@ async function initDashboardPage() {
   });
 
   search.addEventListener('input', render);
+  renderRecords();
   render();
+
+  // Susun ulang papan saat lebar layar berubah kolom.
+  let lastMode = JSON.stringify(boardMode());
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      const mode = JSON.stringify(boardMode());
+      if (mode !== lastMode) { lastMode = mode; render(); }
+    }, 150);
+  });
 }
 
 // ============================================================

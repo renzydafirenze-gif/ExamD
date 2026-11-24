@@ -16,48 +16,66 @@
 </head>
 <body>
 
-  <nav class="topbar" aria-label="Navigasi utama">
-    <div class="topbar-in">
-      <a class="wordmark" href="/dashboard.html">Exam<span>D</span></a>
-      <div class="navlinks">
-        <a class="ghostlink" href="#mapel">Latihan</a>
-        <a class="ghostlink" href="#tanya">Tanya ExamD</a>
+  <main>
+
+    <!-- Papan pertama: nama, navigasi, foto, pernyataan, aksi -->
+    <div class="board">
+      <div class="nameband nameband--ink rise"><p>ExamD</p></div>
+
+      <a class="navtile c3 rise" style="--d:40ms" href="#mapel">Latihan</a>
+      <a class="navtile c3 rise" style="--d:70ms" href="#tanya">Tanya ExamD</a>
+      <div class="navtile navtile--info c3 rise" style="--d:100ms">
+        <span class="num" id="user-points">0</span><small>poin &middot; <span id="nav-user"></span></small>
       </div>
-      <div class="topbar-side">
-        <span class="pointchip"><span class="num" id="user-points">0</span><span>poin</span></span>
-        <span id="nav-user" class="topbar-user"></span>
-        <button id="logout-btn" type="button" class="ghostlink">Keluar</button>
+      <button id="logout-btn" type="button" class="navtile c3 rise" style="--d:130ms">Keluar</button>
+
+      <div class="stack c2">
+        <figure class="tile tile--photo h2 rise" style="--d:160ms">
+          <img src="/assets/female-students-ujian-nasional-2009.jpg" alt="Siswi menunduk menjawab lembar soal ujian" loading="lazy" />
+        </figure>
+        <div class="tile h2 rise" style="--d:190ms">
+          <p class="tile-note"><strong>Cara pakai</strong></p>
+          <div class="facts">
+            <p><strong>Rekor</strong> per mapel di perangkat ini.</p>
+            <p><strong>14 mapel</strong> kelas X, Fase E.</p>
+            <p><strong>25 soal</strong> tiap mapel.</p>
+            <p><strong>10 poin</strong> per jawaban benar; LOTS &amp; HOTS bercampur dalam satu set soal.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stack c8">
+        <header class="tile h2 rise" style="--d:250ms">
+          <h1 id="greeting" class="display tile-state">Halo<span id="greeting-name"></span>.</h1>
+          <p class="tile-note">Pilih mapel, jawab 25 soal, lihat hasilnya per soal. Setiap jawaban benar menambah 10 poin.</p>
+        </header>
+        <figure class="tile tile--photo h3 rise" style="--d:220ms">
+          <img src="/assets/ujian-nasional-2009.jpg" alt="Barisan siswa mengerjakan ujian di ruang kelas, foto arsip 2009" />
+        </figure>
+      </div>
+
+      <div class="stack c2">
+        <div class="tile tile--accent h1 rise" style="--d:400ms">
+          <button id="quick-start" type="button" class="btn btn--paper btn--block">Mapel acak</button>
+        </div>
+        <div class="tile tile--blue h1 rise" style="--d:280ms"><p class="tile-note">Kelas X SMA</p></div>
+        <div class="tile tile--step h1 rise" style="--d:310ms"><p class="tile-note">Kurikulum Merdeka</p></div>
+        <div class="tile h1 rise" style="--d:340ms"><p class="tile-note">350 soal siap</p></div>
+        <div class="tile tile--soft h1 rise" style="--d:370ms"><p class="tile-note">Papan jawaban LJK terisi seperti lembar ujian asli.</p></div>
+      </div>
+
+      <div class="marquee marquee--accent rise" style="--d:430ms" aria-hidden="true">
+        <div class="marquee-track">
+          <span>Latihan yang terasa seperti ujian.</span><span>350 soal, 14 mapel.</span>
+          <span>Latihan yang terasa seperti ujian.</span><span>350 soal, 14 mapel.</span>
+        </div>
       </div>
     </div>
-  </nav>
 
-  <main class="shell">
-
-    <header class="dash-head">
-      <div class="rise">
-        <h1 id="greeting" class="display dash-h">Halo<span id="greeting-name"></span>.</h1>
-        <p class="dash-lead">Pilih mapel, jawab 25 soal, dan lihat hasilnya per soal. Setiap jawaban benar menambah 10 poin.</p>
-      </div>
-      <div class="points-big rise" style="--d:80ms">
-        <p class="num" id="points-big">0</p>
-        <p>poin terkumpul</p>
-      </div>
-    </header>
-
-    <section class="quick rise" style="--d:120ms" aria-labelledby="quick-h">
-      <div class="quick-copy">
-        <div>
-          <h2 id="quick-h">Mulai sekarang, satu mapel.</h2>
-          <p>25 soal, umpan balik langsung, dan rekap skor di akhir sesi.</p>
-        </div>
-        <div class="quick-actions">
-          <button id="quick-start" type="button" class="btn">Mapel acak</button>
-          <a class="linkish" href="#mapel">Pilih sendiri</a>
-        </div>
-      </div>
-
-      <div class="quick-search">
-        <label for="subject-search">Cari mata pelajaran</label>
+    <!-- Cari, saring, rekor -->
+    <div class="board">
+      <section class="tile c6 h2 quick-search rise" aria-labelledby="search-h">
+        <label id="search-h" for="subject-search">Cari mata pelajaran</label>
         <input id="subject-search" type="search" placeholder="Fisika, Kimia, Sejarah…" autocomplete="off" />
         <div class="filters" role="group" aria-label="Saring kelompok mapel">
           <button type="button" class="filter" data-filter="all" aria-pressed="true">Semua</button>
@@ -65,42 +83,92 @@
           <button type="button" class="filter" data-filter="Peminatan" aria-pressed="false">Peminatan</button>
         </div>
         <p id="subject-count" class="searchcount"><strong>14</strong> mapel tersedia</p>
-      </div>
-    </section>
+        <p class="tile-note">Hasil pencarian langsung menyaring papan mapel di bawah.</p>
+      </section>
 
-    <section id="mapel" aria-labelledby="mapel-h">
-      <div class="mapel-head rise">
-        <h2 id="mapel-h">Mata pelajaran</h2>
-        <p>25 soal per mapel · kelas X Kurikulum Merdeka</p>
-      </div>
-      <div id="subject-grid" class="subjects">
-        <!-- Ubin mapel dirender oleh js/app.js -->
-      </div>
-    </section>
-
-    <section class="band rise" aria-label="Suasana ujian">
-      <figure>
-        <img src="/assets/ujian-nasional-2009.jpg" alt="Barisan siswa mengerjakan ujian di ruang kelas, foto arsip 2009" loading="lazy" />
+      <figure class="tile tile--photo c3 h2 rise" style="--d:60ms">
+        <img src="/assets/the-atmosphere-of-a-junior-high-school.jpg" alt="Siswa mengikuti pelajaran di depan layar peta dunia" loading="lazy" />
       </figure>
-      <figure>
-        <img src="/assets/female-students-ujian-nasional-2009.jpg" alt="Siswi menunduk menjawab lembar soal ujian" loading="lazy" />
-      </figure>
-      <div class="band-copy">
-        <p class="band-line">Latihan yang terasa seperti ujian.</p>
-        <a class="btn" href="/quiz.html?subject=Matematika">Mulai Matematika</a>
-      </div>
-    </section>
 
-    <section id="tanya" class="tutor" aria-labelledby="tutor-h">
-      <div class="tutor-copy rise">
-        <h2 id="tutor-h">Belum paham materinya?</h2>
-        <p>Tulis topiknya. ExamD menjelaskan, lalu mengubahnya jadi tugas latihan atau kartu hafalan.</p>
-        <figure class="tutor-photo">
-          <img src="/assets/the-atmosphere-of-a-junior-high-school-2.jpg" alt="Kelas saat pelajaran: siswa mencatat, guru di depan peta dunia" loading="lazy" />
+      <section class="tile tile--blue c3 h2 rise" style="--d:90ms" aria-labelledby="records-h">
+        <h2 id="records-h" class="tile-h">Rekor terbaik</h2>
+        <div id="records-list" class="records"></div>
+      </section>
+    </div>
+
+    <!-- Papan mapel -->
+    <div class="board" id="mapel">
+      <header class="tile c12 h1 rise">
+        <h2 class="tile-h">Mata pelajaran</h2>
+      </header>
+      <div class="c12">
+        <div id="subject-grid" class="subjects"></div>
+      </div>
+      <div class="tile c12 h1 rise" style="--d:80ms">
+        <p class="tile-note">Setiap ubin adalah satu set 25 soal &middot; kelas X Kurikulum Merdeka &middot; skor terbaikmu tersimpan di perangkat ini.</p>
+      </div>
+    </div>
+
+    <!-- Angka -->
+    <div class="board">
+      <figure class="tile tile--photo c8 stats-photo rise">
+        <img src="/assets/the-atmosphere-of-a-junior-high-school-2.jpg" alt="Kelas saat pelajaran: siswa mencatat, guru di depan peta dunia" />
+      </figure>
+      <div class="stack c4">
+        <div class="tile tile--soft h2 rise" style="--d:60ms">
+          <p class="num figure" id="points-big">0</p>
+          <p class="figure-cap">poin terkumpul dari semua sesi</p>
+        </div>
+        <div class="tile tile--step h2 rise" style="--d:90ms">
+          <p class="num figure">14</p>
+          <p class="figure-cap">mapel tersedia, 25 soal masing-masing</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Satu foto dipotong lintas ubin -->
+    <div class="board">
+      <div class="mosaic rise" style="--photo:url('/assets/ujian-nasional-2009.jpg')">
+      <div class="cell" style="--cx:0;--cy:0;--mx:0;--my:0;--px:0;--py:0" aria-hidden="true"></div>
+      <div class="cell" style="--cx:1;--cy:0;--mx:1;--my:0;--px:1;--py:0" aria-hidden="true"></div>
+      <div class="cell" style="--cx:2;--cy:0;--mx:2;--my:0;--px:2;--py:0" aria-hidden="true"></div>
+      <div class="cell cell--flat cell--ink cell--wide" style="--cx:3;--cy:0;--mx:2;--my:0;--px:0;--py:1"><p class="cell-h">Ruang ujian, 2009.</p></div>
+      <div class="cell" style="--cx:4;--cy:0;--mx:0;--my:1;--px:1;--py:1" aria-hidden="true"></div>
+      <div class="cell" style="--cx:5;--cy:0;--mx:1;--my:1;--px:2;--py:1" aria-hidden="true"></div>
+      <div class="cell" style="--cx:0;--cy:1;--mx:2;--my:1;--px:0;--py:2" aria-hidden="true"></div>
+      <div class="cell" style="--cx:1;--cy:1;--mx:3;--my:1;--px:1;--py:2" aria-hidden="true"></div>
+      <div class="cell cell--flat cell--soft" style="--cx:2;--cy:1;--mx:0;--my:2;--px:2;--py:2"><p>25 soal per mapel, dikerjakan satu per satu.</p></div>
+      <div class="cell" style="--cx:3;--cy:1;--mx:1;--my:2;--px:0;--py:3" aria-hidden="true"></div>
+      <div class="cell" style="--cx:4;--cy:1;--mx:2;--my:2;--px:1;--py:3" aria-hidden="true"></div>
+      <div class="cell" style="--cx:5;--cy:1;--mx:3;--my:2;--px:2;--py:3" aria-hidden="true"></div>
+      <div class="cell" style="--cx:0;--cy:2;--mx:0;--my:3;--px:0;--py:4" aria-hidden="true"></div>
+      <div class="cell cell--flat cell--step" style="--cx:1;--cy:2;--mx:1;--my:3;--px:1;--py:4"><p>10 poin tiap jawaban benar.</p></div>
+      <div class="cell" style="--cx:2;--cy:2;--mx:2;--my:3;--px:2;--py:4" aria-hidden="true"></div>
+      <div class="cell" style="--cx:3;--cy:2;--mx:3;--my:3;--px:0;--py:5" aria-hidden="true"></div>
+      <div class="cell" style="--cx:4;--cy:2;--mx:0;--my:4;--px:1;--py:5" aria-hidden="true"></div>
+      <div class="cell" style="--cx:5;--cy:2;--mx:1;--my:4;--px:2;--py:5" aria-hidden="true"></div>
+      <div class="cell cell--flat cell--ink" style="--cx:0;--cy:3;--mx:2;--my:4;--px:0;--py:6"><p>Umpan balik langsung, bukan di akhir sesi.</p></div>
+      <div class="cell" style="--cx:1;--cy:3;--mx:3;--my:4;--px:1;--py:6" aria-hidden="true"></div>
+      <div class="cell" style="--cx:2;--cy:3;--mx:0;--my:5;--px:2;--py:6" aria-hidden="true"></div>
+      <div class="cell cell--flat cell--accent cell--wide" style="--cx:3;--cy:3;--mx:1;--my:5;--px:0;--py:7"><a class="btn btn--paper" href="/quiz.html?subject=Matematika">Mulai Matematika</a></div>
+      <div class="cell" style="--cx:4;--cy:3;--mx:2;--my:5;--px:1;--py:7" aria-hidden="true"></div>
+      <div class="cell" style="--cx:5;--cy:3;--mx:3;--my:5;--px:2;--py:7" aria-hidden="true"></div>
+    </div>
+    </div>
+
+    <!-- Tanya ExamD -->
+    <div class="board" id="tanya">
+      <div class="stack c5">
+        <section class="tile h2 rise" aria-labelledby="tutor-h">
+          <h2 id="tutor-h" class="tile-h">Belum paham materinya?</h2>
+          <p class="tile-note">Tulis topiknya. ExamD menjelaskan, lalu mengubahnya jadi tugas latihan atau kartu hafalan.</p>
+        </section>
+        <figure class="tile tile--photo h2 rise" style="--d:60ms">
+          <img src="/assets/female-students-ujian-nasional-2009.jpg" alt="Siswi mengerjakan soal ujian di kelas" loading="lazy" />
         </figure>
       </div>
 
-      <div class="tutor-panel rise" style="--d:80ms">
+      <section class="tile c7 h4 rise" style="--d:90ms" aria-label="Panel Tanya ExamD">
         <form id="learn-form" class="tutor-form">
           <label class="hidden-label" for="learn-topic">Materi yang ingin dipelajari</label>
           <textarea id="learn-topic" required maxlength="2000" rows="3" placeholder="Contoh: jelaskan hukum Newton dengan contoh sehari-hari."></textarea>
@@ -114,37 +182,42 @@
         </div>
         <div id="learn-cards" class="flash-list"></div>
         <p class="tutor-note">Jawaban AI bisa keliru. Cocokkan dengan buku pelajaran atau guru, dan jangan kirim data pribadi.</p>
-      </div>
-    </section>
+      </section>
+    </div>
 
-  </main>
-
-  <footer class="foot">
-    <div class="foot-in">
-      <div class="foot-top">
-        <p class="foot-mark">Exam<span>D</span></p>
-        <div class="dotgrid" aria-hidden="true">
-          <i></i><i></i><i></i><i></i><i></i>
-          <i></i><i></i><i></i><i></i><i></i>
-          <i></i><i></i><i></i><i></i><i></i>
-          <i></i><i></i><i></i><i></i><i></i>
-        </div>
-        <figure class="foot-stamp">
-          <img src="/assets/the-atmosphere-of-a-junior-high-school.jpg" alt="Siswa mengikuti pelajaran di depan peta dunia" loading="lazy" />
-        </figure>
-      </div>
-      <div class="foot-links">
-        <a href="/dashboard.html">Beranda</a>
-        <a href="/quiz.html?subject=Matematika">Latihan Matematika</a>
-        <a href="/quiz.html?subject=Fisika">Latihan Fisika</a>
-        <a href="/login.html">Masuk</a>
-      </div>
-      <div class="foot-imprint">
-        <p>&copy; 2026 ExamD. SMA Kelas X, Kurikulum Merdeka Fase E.</p>
-        <p>Foto: <a href="https://commons.wikimedia.org/wiki/File:Ujian_Nasional_2009.jpg">Ujian Nasional 2009</a> &amp; <a href="https://commons.wikimedia.org/wiki/File:Female_students_Ujian_Nasional_2009.jpg">Siswi saat ujian</a> oleh nugroho khoironi, CC BY-SA 2.0; <a href="https://commons.wikimedia.org/wiki/File:The_atmosphere_of_a_junior_high_school_classroom_in_Indonesia_(2).jpg">Suasana kelas</a> oleh Fitrah 9131, CC BY-SA 4.0. Wikimedia Commons.</p>
+    <!-- Ajakan penutup -->
+    <div class="board">
+      <figure class="tile tile--photo c2 h3 rise">
+        <img src="/assets/ujian-nasional-2009.jpg" alt="Siswa berseragam putih mengerjakan ujian di meja kayu" loading="lazy" />
+      </figure>
+      <section class="tile tile--accent c8 h3 rise" style="--d:60ms" aria-labelledby="cta-h">
+        <h2 id="cta-h" class="tile-state">Mulai satu sesi sekarang.</h2>
+        <p class="tile-note">25 soal, umpan balik langsung, rekap skor di akhir.</p>
+        <div><a class="btn btn--paper" href="/quiz.html?subject=Matematika">Mulai Matematika</a></div>
+      </section>
+      <div class="tile tile--step c2 h3 rise" style="--d:90ms">
+        <p class="tile-note">Atau pilih mapel lain di papan atas.</p>
       </div>
     </div>
-  </footer>
+
+    <!-- Footer: nama dari balok -->
+    <footer class="board">
+      <div class="tile tile--ink c8 h3 rise">
+        <div class="footmark" aria-hidden="true"><b>E</b><b>x</b><b>a</b><b>m</b><b>D</b></div>
+        <nav class="foot-links" aria-label="Tautan footer">
+          <a href="#mapel">Latihan</a>
+          <a href="/quiz.html?subject=Matematika">Latihan Matematika</a>
+          <a href="/quiz.html?subject=Fisika">Latihan Fisika</a>
+          <a href="/login.html">Masuk</a>
+        </nav>
+      </div>
+      <div class="tile c4 h3 rise" style="--d:60ms">
+        <p class="credits">&copy; 2026 ExamD. SMA Kelas X, Kurikulum Merdeka Fase E.</p>
+        <p class="credits">Foto: <a href="https://commons.wikimedia.org/wiki/File:Ujian_Nasional_2009.jpg">Ujian Nasional 2009</a> &amp; <a href="https://commons.wikimedia.org/wiki/File:Female_students_Ujian_Nasional_2009.jpg">Siswi saat ujian</a> oleh nugroho khoironi, CC BY-SA 2.0; <a href="https://commons.wikimedia.org/wiki/File:The_atmosphere_of_a_junior_high_school_classroom_in_Indonesia_(2).jpg">Suasana kelas</a> oleh Fitrah 9131, CC BY-SA 4.0. Wikimedia Commons.</p>
+      </div>
+    </footer>
+
+  </main>
 
   <script src="/js/app.js"></script>
   <script src="/js/learn.js"></script>
